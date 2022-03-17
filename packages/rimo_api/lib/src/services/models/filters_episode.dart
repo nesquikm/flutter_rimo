@@ -1,4 +1,4 @@
-import 'package:rimo_api/src/services/filters.dart';
+import 'package:rimo_api/src/services/models/filters.dart';
 
 class ApiEpisodeFilters extends ApiFilters {
   ApiEpisodeFilters({this.name, this.episode});

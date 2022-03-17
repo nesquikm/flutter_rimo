@@ -4,21 +4,11 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:rimo_api/src/models/models.dart';
 import 'package:rimo_api/src/services/constants.dart';
-import 'package:rimo_api/src/services/filters_episode.dart';
+import 'package:rimo_api/src/services/models/models.dart';
 
 /// {@template rimo_api_episode}
 /// The interface and models for an API providing access to episode.
 /// {@endtemplate}
-class EpisodePage {
-  /// {@macro rimo_api_episode}
-  const EpisodePage({required this.info, required this.episodes});
-
-  /// An info object
-  final Info info;
-
-  /// A list of episodes
-  final List<Episode> episodes;
-}
 
 class ApiEpisodeFailure implements Exception {}
 
@@ -53,7 +43,7 @@ class ApiEpisode {
             .map<Episode>(Episode.fromJson),
       );
 
-      return EpisodePage(info: info, episodes: episodes);
+      return EpisodePage(info: info, entities: episodes);
     } catch (e) {
       log(e.toString());
       throw ApiEpisodeFailure();

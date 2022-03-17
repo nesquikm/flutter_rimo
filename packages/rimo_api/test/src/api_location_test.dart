@@ -1,3 +1,5 @@
+// ignore_for_file: cascade_invocations
+
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:rimo_api/rimo_api.dart';
 import 'package:test/test.dart';
@@ -25,28 +27,19 @@ void main() {
     final api = RimoApi();
     final dioAdapter = DioAdapter(dio: api.dio);
 
-    // ignore: cascade_invocations
     dioAdapter.onGet(
       'location/[3, 7, 11]',
-      (server) {
-        return server.reply(200, testLocationsResponse);
-      },
+      (server) => server.reply(200, testLocationsResponse),
     );
 
-    // ignore: cascade_invocations
     dioAdapter.onGet(
       'location',
-      (server) {
-        return server.reply(200, testLocationPageResponse);
-      },
+      (server) => server.reply(200, testLocationPageResponse),
     );
 
-    // ignore: cascade_invocations
     dioAdapter.onGet(
       'location?name=Earth',
-      (server) {
-        return server.reply(200, testLocationPageResponse);
-      },
+      (server) => server.reply(200, testLocationPageResponse),
     );
 
     expect(
@@ -55,14 +48,14 @@ void main() {
     );
 
     expect(
-      (await api.location.getAllLocations()).locations.elementAt(1),
+      (await api.location.getAllLocations()).entities.elementAt(1),
       testLocation,
     );
 
     expect(
       (await api.location
               .getAllLocations(filters: ApiLocationFilters(name: 'Earth')))
-          .locations
+          .entities
           .elementAt(1),
       testLocation,
     );

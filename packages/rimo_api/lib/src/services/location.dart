@@ -4,21 +4,11 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:rimo_api/src/models/models.dart';
 import 'package:rimo_api/src/services/constants.dart';
-import 'package:rimo_api/src/services/filters_location.dart';
+import 'package:rimo_api/src/services/models/models.dart';
 
 /// {@template rimo_api_location}
 /// The interface and models for an API providing access to location.
 /// {@endtemplate}
-class LocationPage {
-  /// {@macro rimo_api_location}
-  const LocationPage({required this.info, required this.locations});
-
-  /// An info object
-  final Info info;
-
-  /// A list of locations
-  final List<Location> locations;
-}
 
 class ApiLocationFailure implements Exception {}
 
@@ -53,7 +43,7 @@ class ApiLocation {
             .map<Location>(Location.fromJson),
       );
 
-      return LocationPage(info: info, locations: locations);
+      return LocationPage(info: info, entities: locations);
     } catch (e) {
       log(e.toString());
       throw ApiLocationFailure();

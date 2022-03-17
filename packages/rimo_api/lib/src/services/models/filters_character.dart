@@ -1,5 +1,5 @@
 import 'package:rimo_api/src/models/models.dart';
-import 'package:rimo_api/src/services/filters.dart';
+import 'package:rimo_api/src/services/models/filters.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 
 class ApiCharacterFilters extends ApiFilters {

@@ -1,4 +1,4 @@
-import 'package:rimo_api/src/services/filters.dart';
+import 'package:rimo_api/src/services/models/filters.dart';
 
 class ApiLocationFilters extends ApiFilters {
   ApiLocationFilters({this.name, this.type, this.dimension});

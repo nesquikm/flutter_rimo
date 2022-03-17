@@ -1,3 +1,5 @@
+// ignore_for_file: cascade_invocations
+
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:rimo_api/rimo_api.dart';
 import 'package:test/test.dart';
@@ -36,28 +38,19 @@ void main() {
     final api = RimoApi();
     final dioAdapter = DioAdapter(dio: api.dio);
 
-    // ignore: cascade_invocations
     dioAdapter.onGet(
       'character/[1, 183]',
-      (server) {
-        return server.reply(200, testCharactersResponse);
-      },
+      (server) => server.reply(200, testCharactersResponse),
     );
 
-    // ignore: cascade_invocations
     dioAdapter.onGet(
       'character',
-      (server) {
-        return server.reply(200, testCharacterPageResponse);
-      },
+      (server) => server.reply(200, testCharacterPageResponse),
     );
 
-    // ignore: cascade_invocations
     dioAdapter.onGet(
       'character?name=Earth',
-      (server) {
-        return server.reply(200, testCharacterPageResponse);
-      },
+      (server) => server.reply(200, testCharacterPageResponse),
     );
 
     expect(
@@ -66,14 +59,14 @@ void main() {
     );
 
     expect(
-      (await api.character.getAllCharacters()).characters.elementAt(1),
+      (await api.character.getAllCharacters()).entities.elementAt(1),
       testCharacter,
     );
 
     expect(
       (await api.character
               .getAllCharacters(filters: ApiCharacterFilters(name: 'Earth')))
-          .characters
+          .entities
           .elementAt(1),
       testCharacter,
     );

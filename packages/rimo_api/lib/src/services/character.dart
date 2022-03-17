@@ -4,21 +4,11 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:rimo_api/src/models/models.dart';
 import 'package:rimo_api/src/services/constants.dart';
-import 'package:rimo_api/src/services/filters_character.dart';
+import 'package:rimo_api/src/services/models/models.dart';
 
 /// {@template rimo_api_character}
 /// The interface and models for an API providing access to character.
-/// {@endtemplate}
-class CharacterPage {
-  /// {@macro rimo_api_character}
-  const CharacterPage({required this.info, required this.characters});
-
-  /// An info object
-  final Info info;
-
-  /// A list of haracters
-  final List<Character> characters;
-}
+// /// {@endtemplate}
 
 class ApiCharacterFailure implements Exception {}
 
@@ -53,7 +43,7 @@ class ApiCharacter {
             .map<Character>(Character.fromJson),
       );
 
-      return CharacterPage(info: info, characters: characters);
+      return CharacterPage(info: info, entities: characters);
     } catch (e) {
       log(e.toString());
       throw ApiCharacterFailure();

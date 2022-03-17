@@ -1,3 +1,5 @@
+// ignore_for_file: cascade_invocations
+
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:rimo_api/rimo_api.dart';
 import 'package:test/test.dart';
@@ -23,28 +25,19 @@ void main() {
     final api = RimoApi();
     final dioAdapter = DioAdapter(dio: api.dio);
 
-    // ignore: cascade_invocations
     dioAdapter.onGet(
       'episode/[10, 28, 30]',
-      (server) {
-        return server.reply(200, testEpisodesResponse);
-      },
+      (server) => server.reply(200, testEpisodesResponse),
     );
 
-    // ignore: cascade_invocations
     dioAdapter.onGet(
       'episode',
-      (server) {
-        return server.reply(200, testEpisodePageResponse);
-      },
+      (server) => server.reply(200, testEpisodePageResponse),
     );
 
-    // ignore: cascade_invocations
     dioAdapter.onGet(
       'episode?name=Earth',
-      (server) {
-        return server.reply(200, testEpisodePageResponse);
-      },
+      (server) => server.reply(200, testEpisodePageResponse),
     );
 
     expect(
@@ -53,14 +46,14 @@ void main() {
     );
 
     expect(
-      (await api.episode.getAllEpisodes()).episodes.elementAt(1),
+      (await api.episode.getAllEpisodes()).entities.elementAt(1),
       testEpisode,
     );
 
     expect(
       (await api.episode
               .getAllEpisodes(filters: ApiEpisodeFilters(name: 'Earth')))
-          .episodes
+          .entities
           .elementAt(1),
       testEpisode,
     );

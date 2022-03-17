@@ -4,9 +4,7 @@ import 'package:rimo_api/src/services/constants.dart';
 import 'package:rimo_api/src/services/episode.dart';
 import 'package:rimo_api/src/services/location.dart';
 
-export 'services/filters_character.dart';
-export 'services/filters_episode.dart';
-export 'services/filters_location.dart';
+export 'services/models/models.dart';
 
 /// {@template rimo_api}
 /// The interface and models for an API providing access to backend.
