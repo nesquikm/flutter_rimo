@@ -1,6 +1,10 @@
+/// ApiFilters provides method for converting present fields into query string
 abstract class ApiFilters {
+  /// Subclasses should provide list of fields for converting them into query
+  /// string
   Map<String, String?> getFields();
 
+  /// Get query string for present fields
   String getQuery() {
     var query = '';
 

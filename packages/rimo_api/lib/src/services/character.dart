@@ -17,8 +17,10 @@ class ApiCharacter {
   /// {@macro rimo_api_character}
   ApiCharacter({required this.dio});
 
+  /// Public Dio getter
   final Dio dio;
 
+  /// Get all characters (filtred/paged)
   Future<CharacterPage> getAllCharacters({
     ApiCharacterFilters? filters,
     CharacterPage? prevPage,
@@ -50,6 +52,7 @@ class ApiCharacter {
     }
   }
 
+  /// Get list of characters byt id
   Future<List<Character>> getListOfCharacters({required List<int> ids}) async {
     try {
       final url = '${Constants.characterEndpoint}/$ids';

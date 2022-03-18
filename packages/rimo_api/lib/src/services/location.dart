@@ -17,8 +17,10 @@ class ApiLocation {
   /// {@macro rimo_api_location}
   ApiLocation({required this.dio});
 
+  /// Public Dio getter
   final Dio dio;
 
+  /// Get all locations (filtred/paged)
   Future<LocationPage> getAllLocations({
     ApiLocationFilters? filters,
     LocationPage? prevPage,
@@ -50,6 +52,7 @@ class ApiLocation {
     }
   }
 
+  /// Get list of locations byt id
   Future<List<Location>> getListOfLocations({required List<int> ids}) async {
     try {
       final url = '${Constants.locationEndpoint}/$ids';

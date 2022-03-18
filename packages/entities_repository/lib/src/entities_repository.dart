@@ -26,11 +26,17 @@ class EntitiesRepository {
     );
   }
 
+  /// Public Dio getter
   Dio get dio => _rimoApi.dio;
 
   late final RimoApi _rimoApi;
 
+  /// Ready for use PageableCharacters instance
   late final PageableCharacters pageableCharacters;
+
+  /// Ready for use PageableEpisodes instance
   late final PageableEpisodes pageableEpisodes;
+
+  /// Ready for use PageableLocations instance
   late final PageableLocations pageableLocations;
 }

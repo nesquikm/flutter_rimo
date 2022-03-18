@@ -21,8 +21,15 @@ class RimoApi {
     baseUrl: Constants.baseURL,
   );
 
+  /// Public Dio getter
   final Dio dio;
+
+  /// Ready for use ApiLocation instance
   late final ApiLocation location;
+
+  /// Ready for use ApiEpisode instance
   late final ApiEpisode episode;
+
+  /// Ready for use ApiCharacter instance
   late final ApiCharacter character;
 }

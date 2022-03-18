@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+/// Entity prototype
 abstract class Entity extends Equatable {
   /// Create explicit entity
   const Entity({

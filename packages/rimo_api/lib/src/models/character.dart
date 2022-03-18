@@ -6,22 +6,34 @@ part 'character.g.dart';
 
 /// A chacacter status
 enum CharacterStatus {
+  /// The character is alive
   @JsonValue('Alive')
   alive,
+
+  /// The character is dead
   @JsonValue('Dead')
   dead,
+
+  /// The character is in unknown status
   @JsonValue('unknown')
   unknown,
 }
 
 /// A chacacter gender
 enum CharacterGender {
+  /// The character is female
   @JsonValue('Female')
   female,
+
+  /// The character is male
   @JsonValue('Male')
   male,
+
+  /// The character is genderless
   @JsonValue('Genderless')
   genderless,
+
+  /// The character's gender is unknown
   @JsonValue('unknown')
   unknown,
 }

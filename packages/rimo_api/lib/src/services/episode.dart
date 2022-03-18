@@ -17,8 +17,10 @@ class ApiEpisode {
   /// {@macro rimo_api_episode}
   ApiEpisode({required this.dio});
 
+  /// Public Dio getter
   final Dio dio;
 
+  /// Get all episodes (filtred/paged)
   Future<EpisodePage> getAllEpisodes({
     ApiEpisodeFilters? filters,
     EpisodePage? prevPage,
@@ -50,6 +52,7 @@ class ApiEpisode {
     }
   }
 
+  /// Get list of episodes byt id
   Future<List<Episode>> getListOfEpisodes({required List<int> ids}) async {
     try {
       final url = '${Constants.episodeEndpoint}/$ids';

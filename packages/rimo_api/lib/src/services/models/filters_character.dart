@@ -1,8 +1,12 @@
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:rimo_api/src/models/models.dart';
 import 'package:rimo_api/src/services/models/filters.dart';
-import 'package:enum_to_string/enum_to_string.dart';
 
+/// {@template api_character_filters}
+/// Provides filters for character query
+/// {@endtemplate}
 class ApiCharacterFilters extends ApiFilters {
+  /// {@macro api_character_filters}
   ApiCharacterFilters({
     this.name,
     this.status,
@@ -11,10 +15,19 @@ class ApiCharacterFilters extends ApiFilters {
     this.gender,
   });
 
+  /// Character name
   final String? name;
+
+  /// Character status
   final CharacterStatus? status;
+
+  /// Character species
   final String? species;
+
+  /// Character type
   final String? type;
+
+  /// Character gender
   final CharacterGender? gender;
 
   @override
