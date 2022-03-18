@@ -5,13 +5,13 @@ import 'package:rimo_api/rimo_api.dart';
 /// A repository that handles character requests.
 /// {@endtemplate}
 class PageableCharacters
-    extends Pageable<Character, CharacterPage, ApiCharacterFilters> {
+    extends Pageable<Character, PageCharacter, ApiCharacterFilters> {
   /// {@macro pageable_characters}
   PageableCharacters({
-    required Future<CharacterPage> Function({
+    required Future<PageCharacter> Function({
       ApiCharacterFilters? filters,
-      CharacterPage? nextPage,
-      CharacterPage? prevPage,
+      PageCharacter? nextPage,
+      PageCharacter? prevPage,
     })
         getAllEntities,
     required Future<List<Character>> Function({required List<int> ids})

@@ -21,10 +21,10 @@ class ApiCharacter {
   final Dio dio;
 
   /// Get all characters (filtred/paged)
-  Future<CharacterPage> getAllCharacters({
+  Future<PageCharacter> getAllCharacters({
     ApiCharacterFilters? filters,
-    CharacterPage? prevPage,
-    CharacterPage? nextPage,
+    PageCharacter? prevPage,
+    PageCharacter? nextPage,
   }) async {
     try {
       final url = filters != null
@@ -45,7 +45,7 @@ class ApiCharacter {
             .map<Character>(Character.fromJson),
       );
 
-      return CharacterPage(info: info, entities: characters);
+      return PageCharacter(info: info, entities: characters);
     } catch (e) {
       log(e.toString());
       throw ApiCharacterFailure();

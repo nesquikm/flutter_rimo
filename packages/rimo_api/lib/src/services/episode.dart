@@ -21,10 +21,10 @@ class ApiEpisode {
   final Dio dio;
 
   /// Get all episodes (filtred/paged)
-  Future<EpisodePage> getAllEpisodes({
+  Future<PageEpisode> getAllEpisodes({
     ApiEpisodeFilters? filters,
-    EpisodePage? prevPage,
-    EpisodePage? nextPage,
+    PageEpisode? prevPage,
+    PageEpisode? nextPage,
   }) async {
     try {
       final url = filters != null
@@ -45,7 +45,7 @@ class ApiEpisode {
             .map<Episode>(Episode.fromJson),
       );
 
-      return EpisodePage(info: info, entities: episodes);
+      return PageEpisode(info: info, entities: episodes);
     } catch (e) {
       log(e.toString());
       throw ApiEpisodeFailure();

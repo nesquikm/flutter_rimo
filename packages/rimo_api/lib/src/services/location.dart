@@ -21,10 +21,10 @@ class ApiLocation {
   final Dio dio;
 
   /// Get all locations (filtred/paged)
-  Future<LocationPage> getAllLocations({
+  Future<PageLocation> getAllLocations({
     ApiLocationFilters? filters,
-    LocationPage? prevPage,
-    LocationPage? nextPage,
+    PageLocation? prevPage,
+    PageLocation? nextPage,
   }) async {
     try {
       final url = filters != null
@@ -45,7 +45,7 @@ class ApiLocation {
             .map<Location>(Location.fromJson),
       );
 
-      return LocationPage(info: info, entities: locations);
+      return PageLocation(info: info, entities: locations);
     } catch (e) {
       log(e.toString());
       throw ApiLocationFailure();

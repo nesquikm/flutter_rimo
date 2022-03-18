@@ -5,13 +5,13 @@ import 'package:rimo_api/rimo_api.dart';
 /// A repository that handles episode requests.
 /// {@endtemplate}
 class PageableEpisodes
-    extends Pageable<Episode, EpisodePage, ApiEpisodeFilters> {
+    extends Pageable<Episode, PageEpisode, ApiEpisodeFilters> {
   /// {@macro pageable_episodes}
   PageableEpisodes({
-    required Future<EpisodePage> Function({
+    required Future<PageEpisode> Function({
       ApiEpisodeFilters? filters,
-      EpisodePage? nextPage,
-      EpisodePage? prevPage,
+      PageEpisode? nextPage,
+      PageEpisode? prevPage,
     })
         getAllEntities,
     required Future<List<Episode>> Function({required List<int> ids})

@@ -5,13 +5,13 @@ import 'package:rimo_api/rimo_api.dart';
 /// A repository that handles location requests.
 /// {@endtemplate}
 class PageableLocations
-    extends Pageable<Location, LocationPage, ApiLocationFilters> {
+    extends Pageable<Location, PageLocation, ApiLocationFilters> {
   /// {@macro pageable_locations}
   PageableLocations({
-    required Future<LocationPage> Function({
+    required Future<PageLocation> Function({
       ApiLocationFilters? filters,
-      LocationPage? nextPage,
-      LocationPage? prevPage,
+      PageLocation? nextPage,
+      PageLocation? prevPage,
     })
         getAllEntities,
     required Future<List<Location>> Function({required List<int> ids})
