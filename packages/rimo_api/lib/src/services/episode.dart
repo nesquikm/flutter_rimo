@@ -51,18 +51,18 @@ class ApiEpisode {
   }
 
   Future<List<Episode>> getListOfEpisodes({required List<int> ids}) async {
-    // try {
-    final url = '${Constants.episodeEndpoint}/$ids';
+    try {
+      final url = '${Constants.episodeEndpoint}/$ids';
 
-    final response = await dio.get<List<dynamic>>(url);
+      final response = await dio.get<List<dynamic>>(url);
 
-    return List<Episode>.from(
-      List<Map<String, dynamic>>.from(response.data!)
-          .map<Episode>(Episode.fromJson),
-    );
-    // } catch (e) {
-    //   log(e.toString());
-    //   throw ApiEpisodeFailure();
-    // }
+      return List<Episode>.from(
+        List<Map<String, dynamic>>.from(response.data!)
+            .map<Episode>(Episode.fromJson),
+      );
+    } catch (e) {
+      log(e.toString());
+      throw ApiEpisodeFailure();
+    }
   }
 }

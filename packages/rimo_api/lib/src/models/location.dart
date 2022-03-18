@@ -1,28 +1,25 @@
-import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:rimo_api/src/models/entity.dart';
 
 part 'location.g.dart';
 
 /// A location class
 @JsonSerializable()
-class Location extends Equatable {
+class Location extends Entity {
   /// Create explicit location
   const Location({
-    required this.id,
+    required int id,
     required this.name,
     required this.type,
     required this.dimension,
     required this.residents,
     required this.url,
     required this.created,
-  });
+  }) : super(id: id);
 
   /// Create location from json
   factory Location.fromJson(Map<String, dynamic> json) =>
       _$LocationFromJson(json);
-
-  /// The id of the location.
-  final int id;
 
   /// The name of the location.
   final String name;

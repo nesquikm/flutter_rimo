@@ -1,6 +1,6 @@
 import 'package:rimo_api/src/models/models.dart';
 
-abstract class Page<E> {
+abstract class Page<E extends Entity> {
   Page(this.info, this.entities);
 
   /// An info object

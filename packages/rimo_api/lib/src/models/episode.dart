@@ -1,28 +1,25 @@
-import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:rimo_api/src/models/entity.dart';
 
 part 'episode.g.dart';
 
 /// An episode class
 @JsonSerializable()
-class Episode extends Equatable {
+class Episode extends Entity {
   /// Create explicit episode
   const Episode({
-    required this.id,
+    required int id,
     required this.name,
     required this.airDate,
     required this.episode,
     required this.characters,
     required this.url,
     required this.created,
-  });
+  }) : super(id: id);
 
   /// Create episode from json
   factory Episode.fromJson(Map<String, dynamic> json) =>
       _$EpisodeFromJson(json);
-
-  /// The id of the episode.
-  final int id;
 
   /// The name of the episode.
   final String name;

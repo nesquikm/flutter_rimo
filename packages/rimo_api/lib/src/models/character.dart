@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:rimo_api/src/models/entity.dart';
 
 part 'character.g.dart';
 
@@ -53,10 +54,10 @@ class CharacterLocation extends Equatable {
 
 /// A character class
 @JsonSerializable()
-class Character extends Equatable {
+class Character extends Entity {
   /// Create explicit character
   const Character({
-    required this.id,
+    required int id,
     required this.name,
     required this.status,
     required this.species,
@@ -68,14 +69,11 @@ class Character extends Equatable {
     required this.episode,
     required this.url,
     required this.created,
-  });
+  }) : super(id: id);
 
   /// Create character location from json
   factory Character.fromJson(Map<String, dynamic> json) =>
       _$CharacterFromJson(json);
-
-  /// The id of the character.
-  final int id;
 
   /// The name of the character.
   final String name;
