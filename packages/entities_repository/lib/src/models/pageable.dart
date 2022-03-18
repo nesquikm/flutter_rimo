@@ -1,6 +1,7 @@
 import 'package:rimo_api/rimo_api.dart';
 
-abstract class Pageable<E, P extends Page<E>, F extends ApiFilters> {
+abstract class Pageable<E extends Entity, P extends Page<E>,
+    F extends ApiFilters> {
   Pageable({required this.getAllEntities, required this.getListOfEntities});
 
   final List<E> entities = [];
