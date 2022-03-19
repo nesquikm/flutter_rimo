@@ -11,6 +11,14 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/helpers.dart';
 
 void main() {
+  group('CounterState', () {
+    test('copyWith works properly', () {
+      const counterState = CounterState(count: 42);
+      expect(counterState.copyWith(), const CounterState(count: 42));
+      expect(counterState.copyWith(count: 66), const CounterState(count: 66));
+    });
+  });
+
   group('CounterCubit', () {
     test('initial state is correct', () {
       mockHydratedStorage(() {
