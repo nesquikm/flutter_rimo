@@ -5,28 +5,43 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_rimo/counter/counter.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/helpers.dart';
+
 void main() {
   group('CounterCubit', () {
-    test('initial state is 0', () {
-      expect(CounterCubit().state, equals(0));
+    test('initial state is correct', () {
+      mockHydratedStorage(() {
+        final counterCubit = CounterCubit();
+        expect(counterCubit.state, const CounterState(count: 0));
+      });
     });
+  });
 
-    blocTest<CounterCubit, int>(
-      'emits [1] when increment is called',
-      build: CounterCubit.new,
-      act: (cubit) => cubit.increment(),
-      expect: () => [equals(1)],
-    );
+  group('toJson/fromJson', () {
+    test('work properly', () {
+      mockHydratedStorage(() {
+        final counterCubit = CounterCubit();
+        expect(
+          counterCubit.fromJson(counterCubit.toJson(counterCubit.state)),
+          counterCubit.state,
+        );
+      });
+    });
+  });
 
-    blocTest<CounterCubit, int>(
-      'emits [-1] when decrement is called',
-      build: CounterCubit.new,
-      act: (cubit) => cubit.decrement(),
-      expect: () => [equals(-1)],
-    );
+  group('emit increment/decrement', () {
+    test('work properly', () {
+      mockHydratedStorage(() {
+        final counterCubit = CounterCubit();
+        expect(counterCubit.state, const CounterState(count: 0));
+        counterCubit.increment();
+        expect(counterCubit.state, const CounterState(count: 1));
+        counterCubit.decrement();
+        expect(counterCubit.state, const CounterState(count: 0));
+      });
+    });
   });
 }

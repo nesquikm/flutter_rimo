@@ -5,11 +5,23 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-class CounterCubit extends Cubit<int> {
-  CounterCubit() : super(0);
+part 'counter_cubit.g.dart';
+part 'counter_state.dart';
 
-  void increment() => emit(state + 1);
-  void decrement() => emit(state - 1);
+class CounterCubit extends HydratedCubit<CounterState> {
+  CounterCubit() : super(const CounterState(count: 0));
+
+  void increment() => emit(state.copyWith(count: state.count + 1));
+  void decrement() => emit(state.copyWith(count: state.count - 1));
+
+  @override
+  CounterState fromJson(Map<String, dynamic> json) =>
+      CounterState.fromJson(json);
+
+  @override
+  Map<String, dynamic> toJson(CounterState state) => state.toJson();
 }
