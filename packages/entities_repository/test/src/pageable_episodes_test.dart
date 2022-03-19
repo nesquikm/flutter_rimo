@@ -23,24 +23,32 @@ void main() {
       (server) => server.reply(200, testEpisodesResponse),
     );
 
-    expect(repository.pageableEpisodes.entities, isEmpty);
+    expect(repository.newPageableEpisodes.entities, isEmpty);
 
-    expect(await repository.pageableEpisodes.getAll(), true);
-    expect(repository.pageableEpisodes.entities.length, 2);
-    expect(repository.pageableEpisodes.entities[0].id, 10);
-    expect(repository.pageableEpisodes.entities[1].id, 28);
+    expect(await repository.newPageableEpisodes.getAll(), true);
+    expect(repository.newPageableEpisodes.entities, isEmpty);
+    expect(await repository.newPageableEpisodes.getNextPage(), false);
 
-    expect(await repository.pageableEpisodes.getNextPage(), false);
-    expect(repository.pageableEpisodes.entities.length, 4);
-    expect(repository.pageableEpisodes.entities[0].id, 10);
-    expect(repository.pageableEpisodes.entities[1].id, 28);
-    expect(repository.pageableEpisodes.entities[2].id, 10);
-    expect(repository.pageableEpisodes.entities[3].id, 28);
+    final pageableEpisodes = repository.newPageableEpisodes;
 
-    expect(await repository.pageableEpisodes.getList(ids: [10, 28]), false);
-    expect(repository.pageableEpisodes.entities.length, 2);
-    expect(repository.pageableEpisodes.entities[0].id, 10);
-    expect(repository.pageableEpisodes.entities[1].id, 28);
+    expect(pageableEpisodes.entities, isEmpty);
+
+    expect(await pageableEpisodes.getAll(), true);
+    expect(pageableEpisodes.entities.length, 2);
+    expect(pageableEpisodes.entities[0].id, 10);
+    expect(pageableEpisodes.entities[1].id, 28);
+
+    expect(await pageableEpisodes.getNextPage(), false);
+    expect(pageableEpisodes.entities.length, 4);
+    expect(pageableEpisodes.entities[0].id, 10);
+    expect(pageableEpisodes.entities[1].id, 28);
+    expect(pageableEpisodes.entities[2].id, 10);
+    expect(pageableEpisodes.entities[3].id, 28);
+
+    expect(await pageableEpisodes.getList(ids: [10, 28]), false);
+    expect(pageableEpisodes.entities.length, 2);
+    expect(pageableEpisodes.entities[0].id, 10);
+    expect(pageableEpisodes.entities[1].id, 28);
   });
 }
 

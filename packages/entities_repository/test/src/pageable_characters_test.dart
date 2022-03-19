@@ -23,24 +23,32 @@ void main() {
       (server) => server.reply(200, testCharactersResponse),
     );
 
-    expect(repository.pageableCharacters.entities, isEmpty);
+    expect(repository.newPageableCharacters.entities, isEmpty);
 
-    expect(await repository.pageableCharacters.getAll(), true);
-    expect(repository.pageableCharacters.entities.length, 2);
-    expect(repository.pageableCharacters.entities[0].id, 10);
-    expect(repository.pageableCharacters.entities[1].id, 28);
+    expect(await repository.newPageableCharacters.getAll(), true);
+    expect(repository.newPageableCharacters.entities, isEmpty);
+    expect(await repository.newPageableCharacters.getNextPage(), false);
 
-    expect(await repository.pageableCharacters.getNextPage(), false);
-    expect(repository.pageableCharacters.entities.length, 4);
-    expect(repository.pageableCharacters.entities[0].id, 10);
-    expect(repository.pageableCharacters.entities[1].id, 28);
-    expect(repository.pageableCharacters.entities[2].id, 10);
-    expect(repository.pageableCharacters.entities[3].id, 28);
+    final pageableCharacters = repository.newPageableCharacters;
 
-    expect(await repository.pageableCharacters.getList(ids: [10, 28]), false);
-    expect(repository.pageableCharacters.entities.length, 2);
-    expect(repository.pageableCharacters.entities[0].id, 10);
-    expect(repository.pageableCharacters.entities[1].id, 28);
+    expect(pageableCharacters.entities, isEmpty);
+
+    expect(await pageableCharacters.getAll(), true);
+    expect(pageableCharacters.entities.length, 2);
+    expect(pageableCharacters.entities[0].id, 10);
+    expect(pageableCharacters.entities[1].id, 28);
+
+    expect(await pageableCharacters.getNextPage(), false);
+    expect(pageableCharacters.entities.length, 4);
+    expect(pageableCharacters.entities[0].id, 10);
+    expect(pageableCharacters.entities[1].id, 28);
+    expect(pageableCharacters.entities[2].id, 10);
+    expect(pageableCharacters.entities[3].id, 28);
+
+    expect(await pageableCharacters.getList(ids: [10, 28]), false);
+    expect(pageableCharacters.entities.length, 2);
+    expect(pageableCharacters.entities[0].id, 10);
+    expect(pageableCharacters.entities[1].id, 28);
   });
 }
 

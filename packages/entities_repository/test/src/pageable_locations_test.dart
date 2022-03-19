@@ -23,24 +23,32 @@ void main() {
       (server) => server.reply(200, testLocationsResponse),
     );
 
-    expect(repository.pageableLocations.entities, isEmpty);
+    expect(repository.newPageableLocations.entities, isEmpty);
 
-    expect(await repository.pageableLocations.getAll(), true);
-    expect(repository.pageableLocations.entities.length, 2);
-    expect(repository.pageableLocations.entities[0].id, 10);
-    expect(repository.pageableLocations.entities[1].id, 28);
+    expect(await repository.newPageableLocations.getAll(), true);
+    expect(repository.newPageableLocations.entities, isEmpty);
+    expect(await repository.newPageableLocations.getNextPage(), false);
 
-    expect(await repository.pageableLocations.getNextPage(), false);
-    expect(repository.pageableLocations.entities.length, 4);
-    expect(repository.pageableLocations.entities[0].id, 10);
-    expect(repository.pageableLocations.entities[1].id, 28);
-    expect(repository.pageableLocations.entities[2].id, 10);
-    expect(repository.pageableLocations.entities[3].id, 28);
+    final pageableLocations = repository.newPageableLocations;
 
-    expect(await repository.pageableLocations.getList(ids: [10, 28]), false);
-    expect(repository.pageableLocations.entities.length, 2);
-    expect(repository.pageableLocations.entities[0].id, 10);
-    expect(repository.pageableLocations.entities[1].id, 28);
+    expect(pageableLocations.entities, isEmpty);
+
+    expect(await pageableLocations.getAll(), true);
+    expect(pageableLocations.entities.length, 2);
+    expect(pageableLocations.entities[0].id, 10);
+    expect(pageableLocations.entities[1].id, 28);
+
+    expect(await pageableLocations.getNextPage(), false);
+    expect(pageableLocations.entities.length, 4);
+    expect(pageableLocations.entities[0].id, 10);
+    expect(pageableLocations.entities[1].id, 28);
+    expect(pageableLocations.entities[2].id, 10);
+    expect(pageableLocations.entities[3].id, 28);
+
+    expect(await pageableLocations.getList(ids: [10, 28]), false);
+    expect(pageableLocations.entities.length, 2);
+    expect(pageableLocations.entities[0].id, 10);
+    expect(pageableLocations.entities[1].id, 28);
   });
 }
 

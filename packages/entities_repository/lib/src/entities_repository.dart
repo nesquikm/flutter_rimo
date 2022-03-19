@@ -9,21 +9,6 @@ class EntitiesRepository {
   /// {@macro entities_repository}
   EntitiesRepository() {
     _rimoApi = RimoApi();
-
-    pageableCharacters = PageableCharacters(
-      getAllEntities: _rimoApi.character.getAllCharacters,
-      getListOfEntities: _rimoApi.character.getListOfCharacters,
-    );
-
-    pageableEpisodes = PageableEpisodes(
-      getAllEntities: _rimoApi.episode.getAllEpisodes,
-      getListOfEntities: _rimoApi.episode.getListOfEpisodes,
-    );
-
-    pageableLocations = PageableLocations(
-      getAllEntities: _rimoApi.location.getAllLocations,
-      getListOfEntities: _rimoApi.location.getListOfLocations,
-    );
   }
 
   /// Public Dio getter
@@ -31,12 +16,21 @@ class EntitiesRepository {
 
   late final RimoApi _rimoApi;
 
-  /// Ready for use PageableCharacters instance
-  late final PageableCharacters pageableCharacters;
+  /// Create a new instance of PageableCharacters instance
+  PageableCharacters get newPageableCharacters => PageableCharacters(
+        getAllEntities: _rimoApi.character.getAllCharacters,
+        getListOfEntities: _rimoApi.character.getListOfCharacters,
+      );
 
-  /// Ready for use PageableEpisodes instance
-  late final PageableEpisodes pageableEpisodes;
+  /// Create a new instance of PageableEpisodes
+  PageableEpisodes get newPageableEpisodes => PageableEpisodes(
+        getAllEntities: _rimoApi.episode.getAllEpisodes,
+        getListOfEntities: _rimoApi.episode.getListOfEpisodes,
+      );
 
-  /// Ready for use PageableLocations instance
-  late final PageableLocations pageableLocations;
+  /// Create a new instance of PageableLocations
+  PageableLocations get newPageableLocations => PageableLocations(
+        getAllEntities: _rimoApi.location.getAllLocations,
+        getListOfEntities: _rimoApi.location.getListOfLocations,
+      );
 }
