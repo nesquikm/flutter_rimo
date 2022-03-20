@@ -9,7 +9,7 @@ import 'package:entities_repository/entities_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_rimo/counter/counter.dart';
+import 'package:flutter_rimo/home/home.dart';
 import 'package:flutter_rimo/l10n/l10n.dart';
 
 class App extends StatelessWidget {
@@ -42,7 +42,7 @@ class AppView extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const CounterPage(),
+      home: const HomePage(),
     );
   }
 }

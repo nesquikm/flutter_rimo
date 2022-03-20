@@ -7,7 +7,7 @@
 
 import 'package:entities_repository/entities_repository.dart';
 import 'package:flutter_rimo/app/app.dart';
-import 'package:flutter_rimo/counter/counter.dart';
+import 'package:flutter_rimo/home/home.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/helpers.dart';
@@ -23,7 +23,7 @@ void main() {
       await mockHydratedStorage(() async {
         await tester.pumpWidget(App(entitiesRepository: entitiesRepository));
       });
-      expect(find.byType(CounterPage), findsOneWidget);
+      expect(find.byType(HomePage), findsOneWidget);
     });
   });
 }
