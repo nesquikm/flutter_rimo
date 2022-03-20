@@ -8,6 +8,8 @@ environment:
 
 dependencies:
   bloc: ^8.0.3
+  entities_repository:
+    path: packages/entities_repository
   equatable: ^2.0.3
   flutter:
     sdk: flutter
@@ -19,8 +21,6 @@ dependencies:
   intl: ^0.17.0
   json_annotation: ^4.4.0
   path_provider: ^2.0.9
-  entities_repository:
-    path: packages/entities_repository
 
 dev_dependencies:
   bloc_test: ^9.0.3
