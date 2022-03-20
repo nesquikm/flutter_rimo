@@ -1,7 +1,7 @@
 {
     "@@locale": "en",
-    "counterAppBarTitle": "Counter",
+    "counterAppBarTitle": "Rick And Morty handbook",
     "@counterAppBarTitle": {
-        "description": "Text shown in the AppBar of the Counter Page"
+        "description": "Rick And Morty handbook and assistant"
     }
 }

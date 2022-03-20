@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rimo/home/home.dart';
+import 'package:flutter_rimo/l10n/l10n.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,9 +20,11 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final selectedTab = context.select((HomeCubit cubit) => cubit.state.tab);
 
     return Scaffold(
+      appBar: AppBar(title: Text(l10n.counterAppBarTitle)),
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         child: Row(
