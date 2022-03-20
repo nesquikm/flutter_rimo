@@ -5,9 +5,8 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import 'package:flutter_rimo/app/app.dart';
 import 'package:flutter_rimo/bootstrap.dart';
 
 void main() {
-  bootstrap(() => const App());
+  bootstrap();
 }

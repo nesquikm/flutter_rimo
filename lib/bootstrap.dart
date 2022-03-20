@@ -8,7 +8,9 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:entities_repository/entities_repository.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_rimo/app/app.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -26,7 +28,7 @@ class AppBlocObserver extends BlocObserver {
   }
 }
 
-Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
+Future<void> bootstrap() async {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
@@ -38,8 +40,10 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
         storageDirectory: await getApplicationDocumentsDirectory(),
       );
 
+      final entitiesRepository = EntitiesRepository();
+
       await HydratedBlocOverrides.runZoned(
-        () async => runApp(await builder()),
+        () async => runApp(App(entitiesRepository: entitiesRepository)),
         blocObserver: AppBlocObserver(),
         storage: storage,
       );
