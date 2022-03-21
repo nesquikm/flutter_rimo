@@ -22,8 +22,18 @@ class CharactersBloc extends HydratedBloc<CharactersEvent, CharactersState> {
       : _apiCharacter = entitiesRepository.apiCharacter,
         super(CharactersInitial()) {
     on<CharactersReset>(
-      _reset,
-      transformer: throttleDroppable(throttleDuration),
+      (event, emit) {
+        emit(CharactersInitial());
+        add(CharactersFetchNextPage());
+      },
+    );
+
+    on<CharactersFetchFirstPage>(
+      (event, emit) {
+        if (state.characters.isEmpty) {
+          add(CharactersFetchNextPage());
+        }
+      },
     );
 
     on<CharactersFetchNextPage>(
@@ -40,14 +50,6 @@ class CharactersBloc extends HydratedBloc<CharactersEvent, CharactersState> {
   Map<String, dynamic> toJson(CharactersState state) => state.toJson();
 
   final ApiCharacter _apiCharacter;
-
-  Future<void> _reset(
-    CharactersReset event,
-    Emitter<CharactersState> emit,
-  ) async {
-    emit(CharactersInitial());
-    add(CharactersFetchNextPage());
-  }
 
   Future<void> _fetchNextPage(
     CharactersFetchNextPage event,

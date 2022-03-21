@@ -9,4 +9,6 @@ abstract class CharactersEvent extends Equatable {
 
 class CharactersReset extends CharactersEvent {}
 
+class CharactersFetchFirstPage extends CharactersEvent {}
+
 class CharactersFetchNextPage extends CharactersEvent {}

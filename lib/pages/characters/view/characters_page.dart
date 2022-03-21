@@ -12,7 +12,7 @@ class CharactersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CharactersBloc(context.read<EntitiesRepository>())
-        ..add(CharactersFetchNextPage()),
+        ..add(CharactersFetchFirstPage()),
       child: const CharactersView(),
     );
   }
@@ -77,23 +77,6 @@ class CharactersView extends StatelessWidget {
                           },
                         ),
             );
-            // if (state.status == CharactersStatus.failure) {
-            //   return Center(
-            //     child: Text(l10n.charactersErrorSnackbarText),
-            //   );
-            // }
-            // if (state.characters.isEmpty) {
-            //   return const Center(child: CupertinoActivityIndicator());
-            // }
-
-            // return ListView.builder(
-            //   itemCount: state.characters.length,
-            //   itemBuilder: (BuildContext context, int index) {
-            //     return CharacterView(
-            //       character: state.characters.elementAt(index),
-            //     );
-            //   },
-            // );
           },
         ),
       ),
@@ -107,6 +90,10 @@ class CharacterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(character.name);
+    return ListTile(
+      leading: CircleAvatar(foregroundImage: NetworkImage(character.image)),
+      title: Text(character.name),
+      subtitle: Text('${character.species}, ${character.gender.name}'),
+    );
   }
 }
