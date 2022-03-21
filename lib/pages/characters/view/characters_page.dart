@@ -24,6 +24,22 @@ class CharactersView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final _scrollController = ScrollController();
+
+    bool _isBottom() {
+      if (!_scrollController.hasClients) return false;
+      final maxScroll = _scrollController.position.maxScrollExtent;
+      final currentScroll = _scrollController.offset;
+      return currentScroll >= (maxScroll * 0.9);
+    }
+
+    void _onScroll() {
+      if (_isBottom()) {
+        context.read<CharactersBloc>().add(CharactersFetchNextPage());
+      }
+    }
+
+    _scrollController.addListener(_onScroll);
 
     Future<void> _onRefresh() async {
       context.read<CharactersBloc>().add(CharactersReset());
@@ -69,12 +85,19 @@ class CharactersView extends StatelessWidget {
                         )
                       : ListView.builder(
                           physics: const AlwaysScrollableScrollPhysics(),
-                          itemCount: state.characters.length,
+                          itemCount: state.characters.length +
+                              (state.fetchedAll ? 0 : 1),
                           itemBuilder: (BuildContext context, int index) {
+                            if (index == state.characters.length) {
+                              return const Center(
+                                child: CupertinoActivityIndicator(),
+                              );
+                            }
                             return CharacterView(
                               character: state.characters.elementAt(index),
                             );
                           },
+                          controller: _scrollController,
                         ),
             );
           },
