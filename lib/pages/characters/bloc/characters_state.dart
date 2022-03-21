@@ -7,7 +7,7 @@ class CharactersState extends Equatable {
   const CharactersState({
     this.status = CharactersStatus.initial,
     this.characters = const <Character>[],
-    this.fetchedAll = false,
+    this.lastPage,
   });
 
   @override
@@ -16,24 +16,26 @@ class CharactersState extends Equatable {
 
   Map<String, dynamic> toJson() => _$CharactersStateToJson(this);
 
+  final PageCharacter? lastPage;
+
   final CharactersStatus status;
   final List<Character> characters;
-  final bool fetchedAll;
+  bool get fetchedAll => lastPage != null && lastPage?.info.next == null;
 
   CharactersState copyWith({
     CharactersStatus? status,
     List<Character>? characters,
-    bool? fetchedAll,
+    PageCharacter? lastPage,
   }) {
     return CharactersState(
       status: status ?? this.status,
       characters: characters ?? this.characters,
-      fetchedAll: fetchedAll ?? this.fetchedAll,
+      lastPage: lastPage ?? this.lastPage,
     );
   }
 
   @override
-  List<Object> get props => [status, characters, fetchedAll];
+  List<Object?> get props => [lastPage, status, characters];
 }
 
 class CharactersInitial extends CharactersState {}

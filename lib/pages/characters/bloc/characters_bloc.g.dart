@@ -27,19 +27,22 @@ CharactersState _$CharactersStateFromJson(Map<String, dynamic> json) =>
                           (e) => Character.fromJson(e as Map<String, dynamic>))
                       .toList() ??
                   const <Character>[]),
-          fetchedAll:
-              $checkedConvert('fetched_all', (v) => v as bool? ?? false),
+          lastPage: $checkedConvert(
+              'last_page',
+              (v) => v == null
+                  ? null
+                  : PageCharacter.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
-      fieldKeyMap: const {'fetchedAll': 'fetched_all'},
+      fieldKeyMap: const {'lastPage': 'last_page'},
     );
 
 Map<String, dynamic> _$CharactersStateToJson(CharactersState instance) =>
     <String, dynamic>{
+      'last_page': instance.lastPage,
       'status': _$CharactersStatusEnumMap[instance.status],
       'characters': instance.characters,
-      'fetched_all': instance.fetchedAll,
     };
 
 const _$CharactersStatusEnumMap = {

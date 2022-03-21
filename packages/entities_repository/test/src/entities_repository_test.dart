@@ -7,5 +7,14 @@ void main() {
     test('can be instantiated', () {
       expect(EntitiesRepository(), isNotNull);
     });
+    test('ApiCharacter is present', () {
+      expect(EntitiesRepository().apiCharacter, isNotNull);
+    });
+    test('ApiEpisode is present', () {
+      expect(EntitiesRepository().apiEpisode, isNotNull);
+    });
+    test('ApiLocation is present', () {
+      expect(EntitiesRepository().apiLocation, isNotNull);
+    });
   });
 }

@@ -19,7 +19,7 @@ EventTransformer<E> throttleDroppable<E>(Duration duration) {
 
 class CharactersBloc extends HydratedBloc<CharactersEvent, CharactersState> {
   CharactersBloc(EntitiesRepository entitiesRepository)
-      : _pageableCharacters = entitiesRepository.newPageableCharacters,
+      : _apiCharacter = entitiesRepository.apiCharacter,
         super(CharactersInitial()) {
     on<CharactersReset>(
       _reset,
@@ -39,40 +39,32 @@ class CharactersBloc extends HydratedBloc<CharactersEvent, CharactersState> {
   @override
   Map<String, dynamic> toJson(CharactersState state) => state.toJson();
 
-  final PageableCharacters _pageableCharacters;
+  final ApiCharacter _apiCharacter;
 
   Future<void> _reset(
     CharactersReset event,
     Emitter<CharactersState> emit,
   ) async {
     emit(CharactersInitial());
-
-    await _fetch(reset: true, emit: emit);
+    add(CharactersFetchNextPage());
   }
 
   Future<void> _fetchNextPage(
     CharactersFetchNextPage event,
     Emitter<CharactersState> emit,
   ) async {
-    await _fetch(emit: emit);
-  }
-
-  Future<void> _fetch({
-    bool reset = false,
-    required Emitter<CharactersState> emit,
-  }) async {
     try {
-      if (state.fetchedAll && !reset) {
+      if (state.fetchedAll) {
         return;
       }
-      final haveMorePages = _pageableCharacters.entities.isEmpty || reset
-          ? await _pageableCharacters.getAll()
-          : await _pageableCharacters.getNextPage();
+
+      final page =
+          await _apiCharacter.getAllCharacters(prevPage: state.lastPage);
       emit(
-        CharactersState(
+        state.copyWith(
           status: CharactersStatus.success,
-          characters: _pageableCharacters.entities,
-          fetchedAll: !haveMorePages,
+          characters: [...state.characters, ...page.entities],
+          lastPage: page,
         ),
       );
     } catch (_) {

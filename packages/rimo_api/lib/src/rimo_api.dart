@@ -5,6 +5,7 @@ import 'package:rimo_api/src/services/episode.dart';
 import 'package:rimo_api/src/services/location.dart';
 
 export 'services/models/models.dart';
+export 'services/services.dart';
 
 /// {@template rimo_api}
 /// The interface and models for an API providing access to backend.
