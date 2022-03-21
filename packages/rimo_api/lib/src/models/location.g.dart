@@ -26,3 +26,13 @@ Location _$LocationFromJson(Map<String, dynamic> json) => $checkedCreate(
         return val;
       },
     );
+
+Map<String, dynamic> _$LocationToJson(Location instance) => <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'type': instance.type,
+      'dimension': instance.dimension,
+      'residents': instance.residents,
+      'url': instance.url,
+      'created': instance.created.toIso8601String(),
+    };

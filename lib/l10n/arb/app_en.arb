@@ -1,7 +1,11 @@
 {
     "@@locale": "en",
-    "counterAppBarTitle": "Rick And Morty handbook",
-    "@counterAppBarTitle": {
-        "description": "Rick And Morty handbook and assistant"
+    "appBarTitleCharacters": "Characters",
+    "@appBarTitleCharacters": {
+        "description": "App bar title for Characters page"
+    },
+    "charactersErrorSnackbarText": "An error occurred while loading characters",
+    "@charactersErrorSnackbarText": {
+        "description": "Snackbar text shown when an error occurs while loading characters"
     }
 }

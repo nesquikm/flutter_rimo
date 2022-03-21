@@ -51,6 +51,9 @@ class CharacterLocation extends Equatable {
   factory CharacterLocation.fromJson(Map<String, dynamic> json) =>
       _$CharacterLocationFromJson(json);
 
+  /// Store character location to json
+  Map<String, dynamic> toJson() => _$CharacterLocationToJson(this);
+
   /// The name of the location.
   final String name;
 
@@ -86,6 +89,9 @@ class Character extends Entity {
   /// Create character location from json
   factory Character.fromJson(Map<String, dynamic> json) =>
       _$CharacterFromJson(json);
+
+  /// Store character to json
+  Map<String, dynamic> toJson() => _$CharacterToJson(this);
 
   /// The name of the character.
   final String name;

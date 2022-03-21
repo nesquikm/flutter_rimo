@@ -21,6 +21,9 @@ class Episode extends Entity {
   factory Episode.fromJson(Map<String, dynamic> json) =>
       _$EpisodeFromJson(json);
 
+  /// Store episode to json
+  Map<String, dynamic> toJson() => _$EpisodeToJson(this);
+
   /// The name of the episode.
   final String name;
 

@@ -21,6 +21,9 @@ class Location extends Entity {
   factory Location.fromJson(Map<String, dynamic> json) =>
       _$LocationFromJson(json);
 
+  /// Store location to json
+  Map<String, dynamic> toJson() => _$LocationToJson(this);
+
   /// The name of the location.
   final String name;
 

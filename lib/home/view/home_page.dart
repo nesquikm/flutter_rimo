@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rimo/home/home.dart';
-import 'package:flutter_rimo/l10n/l10n.dart';
+import 'package:flutter_rimo/pages/pages.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -20,11 +20,13 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
     final selectedTab = context.select((HomeCubit cubit) => cubit.state.tab);
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.counterAppBarTitle)),
+      body: IndexedStack(
+        index: selectedTab.index,
+        children: const [CharactersPage(), LocationsPage(), EpisodesPage()],
+      ),
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         child: Row(
@@ -33,17 +35,17 @@ class HomeView extends StatelessWidget {
             _HomeTabButton(
               groupValue: selectedTab,
               value: HomeTab.character,
-              icon: const Icon(Icons.person),
+              icon: Icons.person,
             ),
             _HomeTabButton(
               groupValue: selectedTab,
               value: HomeTab.location,
-              icon: const Icon(Icons.location_pin),
+              icon: Icons.location_pin,
             ),
             _HomeTabButton(
               groupValue: selectedTab,
               value: HomeTab.episode,
-              icon: const Icon(Icons.list_rounded),
+              icon: Icons.list_rounded,
             ),
           ],
         ),
@@ -62,7 +64,7 @@ class _HomeTabButton extends StatelessWidget {
 
   final HomeTab groupValue;
   final HomeTab value;
-  final Widget icon;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +73,12 @@ class _HomeTabButton extends StatelessWidget {
       iconSize: 32,
       color:
           groupValue != value ? null : Theme.of(context).colorScheme.secondary,
-      icon: icon,
+      icon: Icon(
+        icon,
+        color: groupValue != value
+            ? null
+            : Theme.of(context).colorScheme.secondary,
+      ),
     );
   }
 }

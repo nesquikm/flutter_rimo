@@ -8,6 +8,7 @@ environment:
 
 dependencies:
   bloc: ^8.0.3
+  bloc_concurrency: ^0.2.0
   entities_repository:
     path: packages/entities_repository
   equatable: ^2.0.3

@@ -21,6 +21,12 @@ CharacterLocation _$CharacterLocationFromJson(Map<String, dynamic> json) =>
       },
     );
 
+Map<String, dynamic> _$CharacterLocationToJson(CharacterLocation instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'url': instance.url,
+    };
+
 Character _$CharacterFromJson(Map<String, dynamic> json) => $checkedCreate(
       'Character',
       json,
@@ -48,6 +54,21 @@ Character _$CharacterFromJson(Map<String, dynamic> json) => $checkedCreate(
         return val;
       },
     );
+
+Map<String, dynamic> _$CharacterToJson(Character instance) => <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'status': _$CharacterStatusEnumMap[instance.status],
+      'species': instance.species,
+      'type': instance.type,
+      'gender': _$CharacterGenderEnumMap[instance.gender],
+      'origin': instance.origin,
+      'location': instance.location,
+      'image': instance.image,
+      'episode': instance.episode,
+      'url': instance.url,
+      'created': instance.created.toIso8601String(),
+    };
 
 const _$CharacterStatusEnumMap = {
   CharacterStatus.alive: 'Alive',

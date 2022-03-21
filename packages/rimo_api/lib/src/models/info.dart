@@ -17,6 +17,9 @@ class Info extends Equatable {
   /// Create info from json
   factory Info.fromJson(Map<String, dynamic> json) => _$InfoFromJson(json);
 
+  /// Store info to json
+  Map<String, dynamic> toJson() => _$InfoToJson(this);
+
   /// The length of the response
   final int count;
 

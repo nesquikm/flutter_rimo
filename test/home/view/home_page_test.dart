@@ -46,13 +46,18 @@ void main() {
       expect(find.byIcon(Icons.location_pin), findsOneWidget);
       expect(find.byIcon(Icons.list_rounded), findsOneWidget);
 
-      // print(
-      //   (tester.firstWidget(find.byIcon(Icons.list_rounded)) as Icon).size,
-      // );
-      // expect(
-      //   (tester.firstWidget(find.byIcon(Icons.list_rounded)) as Icon).color,
-      //   Colors.black,
-      // );
+      expect(
+        (tester.firstWidget(find.byIcon(Icons.person)) as Icon).color,
+        isNull,
+      );
+      expect(
+        (tester.firstWidget(find.byIcon(Icons.location_pin)) as Icon).color,
+        isNull,
+      );
+      expect(
+        (tester.firstWidget(find.byIcon(Icons.list_rounded)) as Icon).color,
+        isNotNull,
+      );
     });
 
     testWidgets('calls setTab when icon is tapped', (tester) async {

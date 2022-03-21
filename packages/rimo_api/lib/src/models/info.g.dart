@@ -21,3 +21,10 @@ Info _$InfoFromJson(Map<String, dynamic> json) => $checkedCreate(
         return val;
       },
     );
+
+Map<String, dynamic> _$InfoToJson(Info instance) => <String, dynamic>{
+      'count': instance.count,
+      'pages': instance.pages,
+      'next': instance.next,
+      'prev': instance.prev,
+    };

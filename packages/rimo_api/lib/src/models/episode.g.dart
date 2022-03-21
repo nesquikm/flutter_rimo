@@ -27,3 +27,13 @@ Episode _$EpisodeFromJson(Map<String, dynamic> json) => $checkedCreate(
       },
       fieldKeyMap: const {'airDate': 'air_date'},
     );
+
+Map<String, dynamic> _$EpisodeToJson(Episode instance) => <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'air_date': instance.airDate,
+      'episode': instance.episode,
+      'characters': instance.characters,
+      'url': instance.url,
+      'created': instance.created.toIso8601String(),
+    };
