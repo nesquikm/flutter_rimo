@@ -102,36 +102,6 @@ class CharactersView extends StatelessWidget {
                   ),
                 ],
               ),
-              // child: (state.status == CharactersStatus.failure)
-              //     ? SingleChildScrollView(
-              //         physics: const AlwaysScrollableScrollPhysics(),
-              //         child: Center(
-              //           child: Text(l10n.charactersErrorSnackbarText),
-              //         ),
-              //       )
-              //     : (state.status == CharactersStatus.initial)
-              //         ? const SingleChildScrollView(
-              //             physics: AlwaysScrollableScrollPhysics(),
-              //             child: Center(
-              //               child: CircularProgressIndicator(),
-              //             ),
-              //           )
-              //         : ListView.builder(
-              //             physics: const AlwaysScrollableScrollPhysics(),
-              //             itemCount: state.characters.length +
-              //                 (state.fetchedAll ? 0 : 1),
-              //             itemBuilder: (BuildContext context, int index) {
-              //               if (index == state.characters.length) {
-              //                 return const Center(
-              //                   child: CircularProgressIndicator(),
-              //                 );
-              //               }
-              //               return CharacterView(
-              //                 character: state.characters.elementAt(index),
-              //               );
-              //             },
-              //             controller: _scrollController,
-              //           ),
             );
           },
         ),
