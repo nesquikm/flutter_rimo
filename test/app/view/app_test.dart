@@ -19,7 +19,7 @@ void main() {
   });
 
   group('App', () {
-    testWidgets('renders CounterPage', (tester) async {
+    testWidgets('renders HomePage', (tester) async {
       await mockHydratedStorage(() async {
         await tester.pumpWidget(App(entitiesRepository: entitiesRepository));
       });

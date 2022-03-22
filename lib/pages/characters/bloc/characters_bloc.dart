@@ -23,15 +23,14 @@ class CharactersBloc extends HydratedBloc<CharactersEvent, CharactersState> {
         super(CharactersInitial()) {
     on<CharactersReset>(
       (event, emit) {
-        emit(CharactersInitial());
-        add(CharactersFetchNextPage());
+        add(const CharactersFetchNextPage(reset: true));
       },
     );
 
     on<CharactersFetchFirstPage>(
       (event, emit) {
         if (state.characters.isEmpty) {
-          add(CharactersFetchNextPage());
+          add(const CharactersFetchNextPage());
         }
       },
     );
@@ -59,16 +58,31 @@ class CharactersBloc extends HydratedBloc<CharactersEvent, CharactersState> {
       if (state.fetchedAll) {
         return;
       }
-
-      final page =
-          await _apiCharacter.getAllCharacters(prevPage: state.lastPage);
       emit(
         state.copyWith(
-          status: CharactersStatus.success,
-          characters: [...state.characters, ...page.entities],
-          lastPage: page,
+          status: CharactersStatus.loading,
         ),
       );
+      if (event.reset) {
+        final page = await _apiCharacter.getAllCharacters();
+        emit(
+          state.copyWith(
+            status: CharactersStatus.success,
+            characters: page.entities,
+            lastPage: page,
+          ),
+        );
+      } else {
+        final page =
+            await _apiCharacter.getAllCharacters(prevPage: state.lastPage);
+        emit(
+          state.copyWith(
+            status: CharactersStatus.success,
+            characters: [...state.characters, ...page.entities],
+            lastPage: page,
+          ),
+        );
+      }
     } catch (_) {
       emit(state.copyWith(status: CharactersStatus.failure));
     }

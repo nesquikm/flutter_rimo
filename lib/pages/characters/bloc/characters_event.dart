@@ -11,4 +11,7 @@ class CharactersReset extends CharactersEvent {}
 
 class CharactersFetchFirstPage extends CharactersEvent {}
 
-class CharactersFetchNextPage extends CharactersEvent {}
+class CharactersFetchNextPage extends CharactersEvent {
+  const CharactersFetchNextPage({this.reset = false});
+  final bool reset;
+}

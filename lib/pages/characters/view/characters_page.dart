@@ -1,5 +1,4 @@
 import 'package:entities_repository/entities_repository.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rimo/l10n/l10n.dart';
@@ -35,7 +34,7 @@ class CharactersView extends StatelessWidget {
 
     void _onScroll() {
       if (_isBottom()) {
-        context.read<CharactersBloc>().add(CharactersFetchNextPage());
+        context.read<CharactersBloc>().add(const CharactersFetchNextPage());
       }
     }
 
@@ -43,6 +42,10 @@ class CharactersView extends StatelessWidget {
 
     Future<void> _onRefresh() async {
       context.read<CharactersBloc>().add(CharactersReset());
+      await context
+          .read<CharactersBloc>()
+          .stream
+          .firstWhere((element) => element.status != CharactersStatus.loading);
     }
 
     return Scaffold(
@@ -69,36 +72,66 @@ class CharactersView extends StatelessWidget {
           builder: (context, state) {
             return RefreshIndicator(
               onRefresh: _onRefresh,
-              child: (state.status == CharactersStatus.failure)
-                  ? SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      child: Center(
-                        child: Text(l10n.charactersErrorSnackbarText),
-                      ),
-                    )
-                  : (state.characters.isEmpty)
-                      ? const SingleChildScrollView(
-                          physics: AlwaysScrollableScrollPhysics(),
-                          child: Center(
-                            child: CupertinoActivityIndicator(),
-                          ),
-                        )
-                      : ListView.builder(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          itemCount: state.characters.length +
-                              (state.fetchedAll ? 0 : 1),
-                          itemBuilder: (BuildContext context, int index) {
-                            if (index == state.characters.length) {
-                              return const Center(
-                                child: CupertinoActivityIndicator(),
-                              );
-                            }
-                            return CharacterView(
-                              character: state.characters.elementAt(index),
-                            );
-                          },
-                          controller: _scrollController,
-                        ),
+              child: Stack(
+                children: [
+                  ListView.builder(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemCount:
+                        state.characters.length + (state.fetchedAll ? 0 : 1),
+                    itemBuilder: (BuildContext context, int index) {
+                      if (index == state.characters.length) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return CharacterView(
+                        character: state.characters.elementAt(index),
+                      );
+                    },
+                    controller: _scrollController,
+                  ),
+                  Center(
+                    child: (state.status == CharactersStatus.failure)
+                        ? const CircularProgressIndicator()
+                        : null,
+                  ),
+                  Center(
+                    child: (state.status == CharactersStatus.initial)
+                        ? Text(l10n.charactersErrorSnackbarText)
+                        : null,
+                  ),
+                ],
+              ),
+              // child: (state.status == CharactersStatus.failure)
+              //     ? SingleChildScrollView(
+              //         physics: const AlwaysScrollableScrollPhysics(),
+              //         child: Center(
+              //           child: Text(l10n.charactersErrorSnackbarText),
+              //         ),
+              //       )
+              //     : (state.status == CharactersStatus.initial)
+              //         ? const SingleChildScrollView(
+              //             physics: AlwaysScrollableScrollPhysics(),
+              //             child: Center(
+              //               child: CircularProgressIndicator(),
+              //             ),
+              //           )
+              //         : ListView.builder(
+              //             physics: const AlwaysScrollableScrollPhysics(),
+              //             itemCount: state.characters.length +
+              //                 (state.fetchedAll ? 0 : 1),
+              //             itemBuilder: (BuildContext context, int index) {
+              //               if (index == state.characters.length) {
+              //                 return const Center(
+              //                   child: CircularProgressIndicator(),
+              //                 );
+              //               }
+              //               return CharacterView(
+              //                 character: state.characters.elementAt(index),
+              //               );
+              //             },
+              //             controller: _scrollController,
+              //           ),
             );
           },
         ),
