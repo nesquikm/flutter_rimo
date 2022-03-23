@@ -87,6 +87,17 @@ void main() {
           equals(CharactersInitial()),
         );
       });
+
+      test('toJson/fromJson works properly', () async {
+        expect(
+          buildBlocMocked().fromJson(
+            buildBlocMocked().toJson(
+              const CharactersState(),
+            ),
+          ),
+          equals(const CharactersState()),
+        );
+      });
     });
 
     blocTest<CharactersBloc, CharactersState>(
@@ -114,8 +125,6 @@ void main() {
         const CharactersState(status: CharactersStatus.failure),
       ],
     );
-
-    // CharactersFetchNextPage
 
     group('CharactersFetchNextPage', () {
       blocTest<CharactersBloc, CharactersState>(
