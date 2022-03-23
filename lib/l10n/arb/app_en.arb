@@ -8,13 +8,20 @@
     "@charactersErrorSnackbarText": {
         "description": "Snackbar text shown when an error occurs while loading characters"
     },
-    "@@locale": "en",
     "appBarTitleLocations": "Locations",
     "@appBarTitleLocations": {
         "description": "App bar title for Locations page"
     },
     "locationsErrorSnackbarText": "An error occurred while loading locations",
-    "@charactersErrorSnackbarText": {
+    "@locationsErrorSnackbarText": {
+        "description": "Snackbar text shown when an error occurs while loading locations"
+    },
+    "appBarTitleEpisodes": "Episodes",
+    "@appBarTitleEpisodes": {
+        "description": "App bar title for Locations page"
+    },
+    "episodesErrorSnackbarText": "An error occurred while loading locations",
+    "@episodesErrorSnackbarText": {
         "description": "Snackbar text shown when an error occurs while loading locations"
     }
 }
