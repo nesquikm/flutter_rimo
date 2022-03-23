@@ -19,12 +19,12 @@ class MockHomeCubit extends MockCubit<HomeState> implements HomeCubit {}
 
 void main() {
   group('HomePage', () {
-    testWidgets('renders HomeView', (tester) async {
-      await mockHydratedStorage(() async {
-        await tester.pumpApp(const HomePage());
-      });
-      expect(find.byType(HomeView), findsOneWidget);
-    });
+    // testWidgets('renders HomeView', (tester) async {
+    //   await mockHydratedStorage(() async {
+    //     await tester.pumpApp(const HomePage());
+    //   });
+    //   expect(find.byType(HomeView), findsOneWidget);
+    // });
     // testWidgets('renders HomeView', (tester) async {
     //   await mockHydratedStorage(() async {
     //     // await tester.pumpApp(const HomePage());
