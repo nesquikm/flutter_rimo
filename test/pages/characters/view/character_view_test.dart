@@ -1,11 +1,6 @@
-import 'package:bloc_test/bloc_test.dart';
 import 'package:entities_repository/entities_repository.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_rimo/home/home.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:flutter_rimo/pages/characters/view/character_view.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 
 import '../../../helpers/helpers.dart';
@@ -50,7 +45,8 @@ void main() {
     group('view', () {
       testWidgets('is rendered', (tester) async {
         await mockNetworkImagesFor(
-            () => tester.pumpApp(CharacterView(character: mockCharacter)));
+          () => tester.pumpApp(CharacterView(character: mockCharacter)),
+        );
 
         expect(find.text(mockCharacter.name), findsOneWidget);
         expect(
