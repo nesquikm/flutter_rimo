@@ -7,5 +7,14 @@
     "charactersErrorSnackbarText": "An error occurred while loading characters",
     "@charactersErrorSnackbarText": {
         "description": "Snackbar text shown when an error occurs while loading characters"
+    },
+    "@@locale": "en",
+    "appBarTitleLocations": "Locations",
+    "@appBarTitleLocations": {
+        "description": "App bar title for Locations page"
+    },
+    "locationsErrorSnackbarText": "An error occurred while loading locations",
+    "@charactersErrorSnackbarText": {
+        "description": "Snackbar text shown when an error occurs while loading locations"
     }
 }

@@ -55,7 +55,7 @@ class CharactersBloc extends HydratedBloc<CharactersEvent, CharactersState> {
     Emitter<CharactersState> emit,
   ) async {
     try {
-      if (state.fetchedAll) {
+      if (state.fetchedAll && !event.reset) {
         return;
       }
       emit(

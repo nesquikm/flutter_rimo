@@ -47,6 +47,7 @@ Map<String, dynamic> _$CharactersStateToJson(CharactersState instance) =>
 
 const _$CharactersStatusEnumMap = {
   CharactersStatus.initial: 'initial',
+  CharactersStatus.loading: 'loading',
   CharactersStatus.success: 'success',
   CharactersStatus.failure: 'failure',
 };

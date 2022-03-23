@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rimo/l10n/l10n.dart';
-import 'package:flutter_rimo/pages/characters/bloc/characters_bloc.dart';
-import 'package:flutter_rimo/pages/characters/view/character_view.dart';
+import 'package:flutter_rimo/pages/locations/bloc/locations_bloc.dart';
+import 'package:flutter_rimo/pages/locations/view/location_view.dart';
 
-class CharactersView extends StatelessWidget {
-  const CharactersView({Key? key}) : super(key: key);
+class LocationsView extends StatelessWidget {
+  const LocationsView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,42 +20,42 @@ class CharactersView extends StatelessWidget {
     }
 
     void _onScroll() {
-      if (_isBottom() && !context.read<CharactersBloc>().state.fetchedAll) {
-        context.read<CharactersBloc>().add(const CharactersFetchNextPage());
+      if (_isBottom() && !context.read<LocationsBloc>().state.fetchedAll) {
+        context.read<LocationsBloc>().add(const LocationsFetchNextPage());
       }
     }
 
     _scrollController.addListener(_onScroll);
 
     Future<void> _onRefresh() async {
-      context.read<CharactersBloc>().add(CharactersReset());
+      context.read<LocationsBloc>().add(LocationsReset());
       await context
-          .read<CharactersBloc>()
+          .read<LocationsBloc>()
           .stream
-          .firstWhere((element) => element.status != CharactersStatus.loading);
+          .firstWhere((element) => element.status != LocationsStatus.loading);
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.appBarTitleCharacters)),
+      appBar: AppBar(title: Text(l10n.appBarTitleLocations)),
       body: MultiBlocListener(
         listeners: [
-          BlocListener<CharactersBloc, CharactersState>(
+          BlocListener<LocationsBloc, LocationsState>(
             listenWhen: (previous, current) =>
                 previous.status != current.status,
             listener: (context, state) {
-              if (state.status == CharactersStatus.failure) {
+              if (state.status == LocationsStatus.failure) {
                 ScaffoldMessenger.of(context)
                   ..hideCurrentSnackBar()
                   ..showSnackBar(
                     SnackBar(
-                      content: Text(l10n.charactersErrorSnackbarText),
+                      content: Text(l10n.locationsErrorSnackbarText),
                     ),
                   );
               }
             },
           ),
         ],
-        child: BlocBuilder<CharactersBloc, CharactersState>(
+        child: BlocBuilder<LocationsBloc, LocationsState>(
           builder: (context, state) {
             return RefreshIndicator(
               onRefresh: _onRefresh,
@@ -64,27 +64,27 @@ class CharactersView extends StatelessWidget {
                   ListView.builder(
                     physics: const AlwaysScrollableScrollPhysics(),
                     itemCount:
-                        state.characters.length + (state.fetchedAll ? 0 : 1),
+                        state.locations.length + (state.fetchedAll ? 0 : 1),
                     itemBuilder: (BuildContext context, int index) {
-                      if (index == state.characters.length) {
+                      if (index == state.locations.length) {
                         return const Center(
                           child: CircularProgressIndicator(),
                         );
                       }
-                      return CharacterView(
-                        character: state.characters.elementAt(index),
+                      return LocationView(
+                        location: state.locations.elementAt(index),
                       );
                     },
                     controller: _scrollController,
                   ),
                   Center(
-                    child: (state.status == CharactersStatus.failure)
+                    child: (state.status == LocationsStatus.failure)
                         ? const CircularProgressIndicator()
                         : null,
                   ),
                   Center(
-                    child: (state.status == CharactersStatus.initial)
-                        ? Text(l10n.charactersErrorSnackbarText)
+                    child: (state.status == LocationsStatus.initial)
+                        ? Text(l10n.locationsErrorSnackbarText)
                         : null,
                   ),
                 ],
