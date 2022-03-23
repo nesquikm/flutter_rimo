@@ -13,32 +13,54 @@ import 'package:flutter_rimo/l10n/l10n.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-extension PumpApp on WidgetTester {
-  Future<void> pumpApp(Widget widget) {
-    final EntitiesRepository entitiesRepository = MockEntitiesRepository();
+class MockEntitiesRepository extends Mock implements EntitiesRepository {}
 
+extension PumpApp on WidgetTester {
+  Future<void> pumpApp(
+    Widget widget, {
+    EntitiesRepository? entitiesRepository,
+  }) {
     return pumpWidget(
       RepositoryProvider.value(
-        value: entitiesRepository,
+        value: entitiesRepository ?? MockEntitiesRepository(),
         child: MaterialApp(
           localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
           ],
           supportedLocales: AppLocalizations.supportedLocales,
-          home: widget,
+          home: Scaffold(body: widget),
         ),
       ),
     );
   }
+
+  ////////////
+  // Future<void> pumpApp(Widget widget) {
+  //   final EntitiesRepository entitiesRepository = MockEntitiesRepository();
+
+  //   return pumpWidget(
+  //     RepositoryProvider.value(
+  //       value: entitiesRepository,
+  //       child: MaterialApp(
+  //         localizationsDelegates: const [
+  //           AppLocalizations.delegate,
+  //           GlobalMaterialLocalizations.delegate,
+  //         ],
+  //         supportedLocales: AppLocalizations.supportedLocales,
+  //         home: widget,
+  //       ),
+  //     ),
+  //   );
+  // }
 }
 
-class MockEntitiesRepository extends Mock implements EntitiesRepository {
-  @override
-  ApiCharacter get apiCharacter => MockApiCharacter();
-}
+// class MockEntitiesRepository extends Mock implements EntitiesRepository {
+//   @override
+//   ApiCharacter get apiCharacter => MockApiCharacter();
+// }
 
-class MockApiCharacter extends Mock implements ApiCharacter {
+// class MockApiCharacter extends Mock implements ApiCharacter {
   // @override
   // Future<PageCharacter> getAllCharacters({
   //   ApiCharacterFilters? filters,
@@ -70,4 +92,4 @@ class MockApiCharacter extends Mock implements ApiCharacter {
   // async {
   //   return [];
   // }
-}
+// }
