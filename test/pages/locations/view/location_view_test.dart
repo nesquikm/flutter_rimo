@@ -1,5 +1,5 @@
 import 'package:entities_repository/entities_repository.dart';
-import 'package:flutter_rimo/pages/Locations/view/location_view.dart';
+import 'package:flutter_rimo/pages/locations/view/location_view.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 
