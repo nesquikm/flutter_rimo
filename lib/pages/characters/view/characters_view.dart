@@ -63,8 +63,10 @@ class CharactersView extends StatelessWidget {
                 children: [
                   ListView.builder(
                     physics: const AlwaysScrollableScrollPhysics(),
-                    itemCount:
-                        state.characters.length + (state.fetchedAll ? 0 : 1),
+                    itemCount: state.characters.length +
+                        ((!state.fetchedAll && state.characters.isNotEmpty)
+                            ? 1
+                            : 0),
                     itemBuilder: (BuildContext context, int index) {
                       if (index == state.characters.length) {
                         return const Center(
@@ -79,12 +81,12 @@ class CharactersView extends StatelessWidget {
                   ),
                   Center(
                     child: (state.status == CharactersStatus.failure)
-                        ? const CircularProgressIndicator()
+                        ? Text(l10n.charactersErrorSnackbarText)
                         : null,
                   ),
                   Center(
                     child: (state.status == CharactersStatus.initial)
-                        ? Text(l10n.charactersErrorSnackbarText)
+                        ? const CircularProgressIndicator()
                         : null,
                   ),
                 ],

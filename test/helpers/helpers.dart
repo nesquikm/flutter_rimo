@@ -6,4 +6,5 @@
 // https://opensource.org/licenses/MIT.
 
 export 'hydrated_bloc.dart';
+export 'l10n.dart';
 export 'pump_app.dart';

@@ -6,10 +6,6 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../../helpers/helpers.dart';
 
-class MockEntitiesRepository extends Mock implements EntitiesRepository {}
-
-class MockApiLocation extends Mock implements ApiLocation {}
-
 class FakeLocation extends Fake implements Location {}
 
 void main() {

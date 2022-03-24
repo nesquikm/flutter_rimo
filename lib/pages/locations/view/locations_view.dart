@@ -63,10 +63,13 @@ class LocationsView extends StatelessWidget {
                 children: [
                   ListView.builder(
                     physics: const AlwaysScrollableScrollPhysics(),
-                    itemCount:
-                        state.locations.length + (state.fetchedAll ? 0 : 1),
+                    itemCount: state.locations.length +
+                        ((!state.fetchedAll && state.locations.isNotEmpty)
+                            ? 1
+                            : 0),
                     itemBuilder: (BuildContext context, int index) {
-                      if (index == state.locations.length) {
+                      if (index == state.locations.length &&
+                          state.locations.isNotEmpty) {
                         return const Center(
                           child: CircularProgressIndicator(),
                         );
@@ -79,12 +82,12 @@ class LocationsView extends StatelessWidget {
                   ),
                   Center(
                     child: (state.status == LocationsStatus.failure)
-                        ? const CircularProgressIndicator()
+                        ? Text(l10n.locationsErrorSnackbarText)
                         : null,
                   ),
                   Center(
                     child: (state.status == LocationsStatus.initial)
-                        ? Text(l10n.locationsErrorSnackbarText)
+                        ? const CircularProgressIndicator()
                         : null,
                   ),
                 ],

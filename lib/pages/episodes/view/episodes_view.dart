@@ -63,10 +63,13 @@ class EpisodesView extends StatelessWidget {
                 children: [
                   ListView.builder(
                     physics: const AlwaysScrollableScrollPhysics(),
-                    itemCount:
-                        state.episodes.length + (state.fetchedAll ? 0 : 1),
+                    itemCount: state.episodes.length +
+                        ((!state.fetchedAll && state.episodes.isNotEmpty)
+                            ? 1
+                            : 0),
                     itemBuilder: (BuildContext context, int index) {
-                      if (index == state.episodes.length) {
+                      if (index == state.episodes.length &&
+                          state.episodes.isNotEmpty) {
                         return const Center(
                           child: CircularProgressIndicator(),
                         );
@@ -79,12 +82,12 @@ class EpisodesView extends StatelessWidget {
                   ),
                   Center(
                     child: (state.status == EpisodesStatus.failure)
-                        ? const CircularProgressIndicator()
+                        ? Text(l10n.episodesErrorSnackbarText)
                         : null,
                   ),
                   Center(
                     child: (state.status == EpisodesStatus.initial)
-                        ? Text(l10n.episodesErrorSnackbarText)
+                        ? const CircularProgressIndicator()
                         : null,
                   ),
                 ],

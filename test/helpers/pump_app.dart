@@ -15,6 +15,12 @@ import 'package:mocktail/mocktail.dart';
 
 class MockEntitiesRepository extends Mock implements EntitiesRepository {}
 
+class MockApiCharacter extends Mock implements ApiCharacter {}
+
+class MockApiLocation extends Mock implements ApiLocation {}
+
+class MockApiEpisode extends Mock implements ApiEpisode {}
+
 extension PumpApp on WidgetTester {
   Future<void> pumpApp(
     Widget widget, {
