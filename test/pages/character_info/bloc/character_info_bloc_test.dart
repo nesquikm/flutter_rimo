@@ -1,6 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:entities_repository/entities_repository.dart';
-import 'package:flutter_rimo/pages/characters/bloc/characters_bloc.dart';
+import 'package:flutter_rimo/pages/character_info/bloc/character_info_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -33,18 +33,7 @@ void main() {
     created: DateTime.parse('2017-11-04T18:48:46.250Z'),
   );
 
-  final mockCharacters = [
-    mockCharacter,
-    mockCharacter,
-    mockCharacter,
-  ];
-
-  final mockPageCharacter = PageCharacter(
-    entities: mockCharacters,
-    info: const Info(count: 2, pages: 3, next: null, prev: null),
-  );
-
-  group('CharactersBloc', () {
+  group('CharacterInfoBloc', () {
     late MockEntitiesRepository entitiesRepository;
     late ApiCharacter mockApiCharacter;
 
@@ -54,9 +43,8 @@ void main() {
 
     setUp(() {
       mockApiCharacter = MockApiCharacter();
-      when(
-        () => mockApiCharacter.getAllCharacters(),
-      ).thenAnswer((_) => Future<PageCharacter>(() => mockPageCharacter));
+      when(() => mockApiCharacter.getListOfCharacters(ids: [42]))
+          .thenAnswer((_) => Future<List<Character>>(() => [mockCharacter]));
 
       entitiesRepository = MockEntitiesRepository();
       when(
@@ -64,10 +52,10 @@ void main() {
       ).thenAnswer((_) => mockApiCharacter);
     });
 
-    CharactersBloc buildBlocMocked() {
-      CharactersBloc? block;
+    CharacterInfoBloc buildBlocMocked() {
+      CharacterInfoBloc? block;
       mockHydratedStorage(() {
-        block = CharactersBloc(entitiesRepository);
+        block = CharacterInfoBloc(entitiesRepository);
       });
       return block!;
     }
@@ -80,7 +68,7 @@ void main() {
       test('has correct initial state', () async {
         expect(
           buildBlocMocked().state,
-          equals(CharactersInitial()),
+          equals(CharacterInfoInitial()),
         );
       });
 
@@ -88,49 +76,70 @@ void main() {
         expect(
           buildBlocMocked().fromJson(
             buildBlocMocked().toJson(
-              const CharactersState(),
+              const CharacterInfoState(),
             ),
           ),
-          equals(const CharactersState()),
+          equals(const CharacterInfoState()),
         );
       });
     });
 
-    blocTest<CharactersBloc, CharactersState>(
+    blocTest<CharacterInfoBloc, CharacterInfoState>(
       'emits state with updated status',
       build: buildBlocMocked,
-      act: (bloc) => bloc.add(CharactersReset()),
+      act: (bloc) => bloc.add(const CharacterInfoFetchById(id: 42)),
       expect: () => [
-        const CharactersState(
-          status: CharactersStatus.loading,
+        const CharacterInfoState(
+          status: CharacterInfoStatus.loading,
+        ),
+        CharacterInfoState(
+          status: CharacterInfoStatus.success,
+          character: mockCharacter,
+          characterCache: {42: mockCharacter},
         ),
       ],
     );
 
-    blocTest<CharactersBloc, CharactersState>(
+    blocTest<CharacterInfoBloc, CharacterInfoState>(
       'emits state with failure status',
       setUp: () {
         when(
-          () => mockApiCharacter.getAllCharacters(),
+          () => mockApiCharacter.getListOfCharacters(ids: [42]),
         ).thenAnswer((_) => throw ApiCharacterFailure());
       },
       build: buildBlocMocked,
-      act: (bloc) => bloc.add(CharactersFetchFirstPage()),
+      act: (bloc) => bloc.add(const CharacterInfoFetchById(id: 42)),
       expect: () => [
-        const CharactersState(status: CharactersStatus.loading),
-        const CharactersState(status: CharactersStatus.failure),
+        const CharacterInfoState(status: CharacterInfoStatus.loading),
+        const CharacterInfoState(status: CharacterInfoStatus.failure),
       ],
     );
 
-    group('CharactersFetchNextPage', () {
-      blocTest<CharactersBloc, CharactersState>(
-        'loads page',
+    blocTest<CharacterInfoBloc, CharacterInfoState>(
+      'emits state with failure status',
+      setUp: () {
+        when(
+          () => mockApiCharacter.getListOfCharacters(ids: [42]),
+        ).thenAnswer((_) => Future<List<Character>>(() => []));
+      },
+      build: buildBlocMocked,
+      act: (bloc) => bloc.add(const CharacterInfoFetchById(id: 42)),
+      expect: () => [
+        const CharacterInfoState(status: CharacterInfoStatus.loading),
+        const CharacterInfoState(status: CharacterInfoStatus.failure),
+      ],
+    );
+
+    group('CharacterInfoFetchById', () {
+      blocTest<CharacterInfoBloc, CharacterInfoState>(
+        'loads character',
         build: buildBlocMocked,
-        seed: CharactersState.new,
-        act: (bloc) => bloc.add(const CharactersFetchNextPage()),
+        seed: CharacterInfoState.new,
+        act: (bloc) => bloc.add(const CharacterInfoFetchById(id: 42)),
         verify: (_) {
           verify(
-            () => entitiesRepository.apiCharacter.getAllCharacters(),
+            () =>
+                entitiesRepository.apiCharacter.getListOfCharacters(ids: [42]),
           ).called(1);
         },
       );

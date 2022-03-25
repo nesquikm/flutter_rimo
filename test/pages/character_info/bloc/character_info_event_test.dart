@@ -1,35 +1,37 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:flutter_rimo/pages/characters/bloc/characters_bloc.dart';
+import 'package:flutter_rimo/pages/character_info/bloc/character_info_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('CharactersEvent', () {
-    group('CharactersReset', () {
+  group('CharacterInfoEvent', () {
+    group('CharacterInfoReset', () {
       test('supports value equality', () {
         expect(
-          CharactersReset(),
-          equals(CharactersReset()),
+          CharacterInfoRefresh(),
+          equals(CharacterInfoRefresh()),
         );
       });
 
       test('props are correct', () {
         expect(
-          CharactersReset().props,
+          CharacterInfoRefresh().props,
           equals(<Object?>[]),
         );
       });
     });
 
-    group('CharactersFetchNextPage', () {
+    group('CharacterInfoFetchById', () {
       test('supports value equality', () {
         expect(
-          CharactersFetchNextPage(
-            reset: true,
+          CharacterInfoFetchById(
+            id: 42,
+            refresh: true,
           ),
           equals(
-            CharactersFetchNextPage(
-              reset: true,
+            CharacterInfoFetchById(
+              id: 42,
+              refresh: true,
             ),
           ),
         );
@@ -37,10 +39,12 @@ void main() {
 
       test('props are correct', () {
         expect(
-          CharactersFetchNextPage(
-            reset: true,
+          CharacterInfoFetchById(
+            id: 42,
+            refresh: true,
           ).props,
           equals(<Object?>[
+            42, // id
             true, // reset
           ]),
         );

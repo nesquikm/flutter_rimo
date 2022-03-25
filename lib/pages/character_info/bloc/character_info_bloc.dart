@@ -19,7 +19,7 @@ EventTransformer<E> throttleDroppable<E>(Duration duration) {
 
 class CharacterInfoBloc
     extends HydratedBloc<CharacterInfoEvent, CharacterInfoState> {
-  CharacterInfoBloc({required EntitiesRepository entitiesRepository})
+  CharacterInfoBloc(EntitiesRepository entitiesRepository)
       : _apiCharacter = entitiesRepository.apiCharacter,
         super(CharacterInfoInitial()) {
     on<CharacterInfoRefresh>(
@@ -31,7 +31,7 @@ class CharacterInfoBloc
     );
 
     on<CharacterInfoFetchById>(
-      _fetchNextPage,
+      _fetchById,
       transformer: throttleDroppable(throttleDuration),
     );
   }
@@ -45,7 +45,7 @@ class CharacterInfoBloc
 
   final ApiCharacter _apiCharacter;
 
-  Future<void> _fetchNextPage(
+  Future<void> _fetchById(
     CharacterInfoFetchById event,
     Emitter<CharacterInfoState> emit,
   ) async {

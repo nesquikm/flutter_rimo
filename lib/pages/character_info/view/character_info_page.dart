@@ -13,7 +13,7 @@ class CharacterInfoPage extends StatelessWidget {
       fullscreenDialog: true,
       builder: (context) => BlocProvider(
         create: (context) => CharacterInfoBloc(
-          entitiesRepository: context.read<EntitiesRepository>(),
+          context.read<EntitiesRepository>(),
         )..add(CharacterInfoFetchById(id: id)),
         child: const CharacterInfoPage(),
       ),
