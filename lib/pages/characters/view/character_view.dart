@@ -2,12 +2,18 @@ import 'package:entities_repository/entities_repository.dart';
 import 'package:flutter/material.dart';
 
 class CharacterView extends StatelessWidget {
-  const CharacterView({Key? key, required this.character}) : super(key: key);
+  const CharacterView({
+    Key? key,
+    required this.character,
+    this.onTap,
+  }) : super(key: key);
   final Character character;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: onTap,
       leading: CircleAvatar(foregroundImage: NetworkImage(character.image)),
       title: Text(character.name),
       subtitle: Text('${character.species}, ${character.gender.name}'),

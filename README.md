@@ -31,6 +31,11 @@ $ flutter run --flavor staging --target lib/main_staging.dart
 $ flutter run --flavor production --target lib/main_production.dart
 ```
 
+To generate code using json_serializable:
+```sh
+flutter packages pub run build_runner build
+```
+
 _\*Flutter Rimo works on iOS, Android, Web, and Windows._
 
 ---

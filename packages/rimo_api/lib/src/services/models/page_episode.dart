@@ -5,7 +5,7 @@ import 'package:rimo_api/src/services/models/page.dart';
 part 'page_episode.g.dart';
 
 /// {@template episode_page}
-/// EpisodePage includes Info and list of characters
+/// PageEpisode includes Info and list of characters
 /// {@endtemplate}
 @JsonSerializable()
 class PageEpisode extends Page<Episode> {

@@ -23,5 +23,9 @@
     "episodesErrorSnackbarText": "An error occurred while loading locations",
     "@episodesErrorSnackbarText": {
         "description": "Snackbar text shown when an error occurs while loading locations"
+    },
+    "appBarTitleCharacter": "Character",
+    "@appBarTitleCharacter": {
+        "description": "App bar title for Character page"
     }
 }

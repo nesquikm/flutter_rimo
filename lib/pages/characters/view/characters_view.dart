@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rimo/l10n/l10n.dart';
+import 'package:flutter_rimo/pages/character_info/view/view.dart';
 import 'package:flutter_rimo/pages/characters/bloc/characters_bloc.dart';
 import 'package:flutter_rimo/pages/characters/view/character_view.dart';
 
@@ -23,6 +24,14 @@ class CharactersView extends StatelessWidget {
       if (_isBottom() && !context.read<CharactersBloc>().state.fetchedAll) {
         context.read<CharactersBloc>().add(const CharactersFetchNextPage());
       }
+    }
+
+    void _onTap(int id) {
+      Navigator.of(context).push(
+        CharacterInfoPage.route(
+          id: id,
+        ),
+      );
     }
 
     _scrollController.addListener(_onScroll);
@@ -73,8 +82,10 @@ class CharactersView extends StatelessWidget {
                           child: CircularProgressIndicator(),
                         );
                       }
+                      final character = state.characters.elementAt(index);
                       return CharacterView(
-                        character: state.characters.elementAt(index),
+                        character: character,
+                        onTap: () => _onTap(character.id),
                       );
                     },
                     controller: _scrollController,

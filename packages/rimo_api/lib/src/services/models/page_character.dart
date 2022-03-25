@@ -5,7 +5,7 @@ import 'package:rimo_api/src/services/models/page.dart';
 part 'page_character.g.dart';
 
 /// {@template character_page}
-/// CharacterPage includes Info and list of characters
+/// PageCharacter includes Info and list of characters
 /// {@endtemplate}
 @JsonSerializable()
 class PageCharacter extends Page<Character> {

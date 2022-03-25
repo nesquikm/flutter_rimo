@@ -5,7 +5,7 @@ import 'package:rimo_api/src/services/models/page.dart';
 part 'page_location.g.dart';
 
 /// {@template location_page}
-/// LocationPage includes Info and list of characters
+/// PageLocation includes Info and list of characters
 /// {@endtemplate}
 @JsonSerializable()
 class PageLocation extends Page<Location> {
