@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rimo/l10n/l10n.dart';
+import 'package:flutter_rimo/pages/location_info/view/view.dart';
 import 'package:flutter_rimo/pages/locations/bloc/locations_bloc.dart';
 import 'package:flutter_rimo/pages/locations/view/location_view.dart';
 
@@ -23,6 +24,14 @@ class LocationsView extends StatelessWidget {
       if (_isBottom() && !context.read<LocationsBloc>().state.fetchedAll) {
         context.read<LocationsBloc>().add(const LocationsFetchNextPage());
       }
+    }
+
+    void _onTap(int id) {
+      Navigator.of(context).push(
+        LocationInfoPage.route(
+          id: id,
+        ),
+      );
     }
 
     _scrollController.addListener(_onScroll);
@@ -74,8 +83,10 @@ class LocationsView extends StatelessWidget {
                           child: CircularProgressIndicator(),
                         );
                       }
+                      final location = state.locations.elementAt(index);
                       return LocationView(
-                        location: state.locations.elementAt(index),
+                        location: location,
+                        onTap: () => _onTap(location.id),
                       );
                     },
                     controller: _scrollController,

@@ -48,12 +48,24 @@
   "@characterLastKnownLocation": {
     "description": "Last character's known location"
   },
-  "characterEpisodes": "Appeared in episodes",
-  "@characterEpisodes": {
-    "description": "List of episodes in which this character appeared"
-  },
   "characterErrorSnackbarText": "An error occurred while loading character",
   "@characterErrorSnackbarText": {
     "description": "Snackbar text shown when an error occurs while loading character"
+  },
+  "appBarTitleLocation": "Location",
+  "@appBarTitleLocation": {
+    "description": "App bar title for Location page"
+  },
+  "locationErrorSnackbarText": "An error occurred while loading location",
+  "@locationErrorSnackbarText": {
+    "description": "Snackbar text shown when an error occurs while loading location"
+  },
+  "locationType": "Type",
+  "@locationType": {
+    "description": "The type of the location"
+  },
+  "locationDimension": "Dimension",
+  "@locationDimension": {
+    "description": "The dimension in which the location is located"
   }
 }
