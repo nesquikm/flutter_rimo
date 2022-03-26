@@ -14,7 +14,10 @@ class CharacterView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: onTap,
-      leading: CircleAvatar(foregroundImage: NetworkImage(character.image)),
+      leading: CircleAvatar(
+        foregroundImage: NetworkImage(character.image),
+        child: const Icon(Icons.person, size: 24),
+      ),
       title: Text(character.name),
       subtitle: Text('${character.species}, ${character.gender.name}'),
     );

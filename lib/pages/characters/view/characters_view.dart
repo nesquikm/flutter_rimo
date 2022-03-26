@@ -96,7 +96,8 @@ class CharactersView extends StatelessWidget {
                         : null,
                   ),
                   Center(
-                    child: (state.status == CharactersStatus.initial)
+                    child: (state.status == CharactersStatus.initial ||
+                            state.characters.isEmpty)
                         ? const CircularProgressIndicator()
                         : null,
                   ),

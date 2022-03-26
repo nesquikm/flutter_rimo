@@ -33,7 +33,12 @@ $ flutter run --flavor production --target lib/main_production.dart
 
 To generate code using json_serializable:
 ```sh
-flutter packages pub run build_runner build
+$ flutter packages pub run build_runner build
+```
+
+To generate l10n:
+```sh
+$ flutter gen-l10n
 ```
 
 _\*Flutter Rimo works on iOS, Android, Web, and Windows._
@@ -45,8 +50,8 @@ _\*Flutter Rimo works on iOS, Android, Web, and Windows._
 To check formatting and analyze code:
 
 ```sh
-flutter format --set-exit-if-changed lib test
-flutter analyze lib test
+$ flutter format --set-exit-if-changed lib test
+$ flutter analyze lib test
 
 ```
 

@@ -35,6 +35,7 @@ class AppView extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: Colors.green,
+          brightness: Brightness.dark,
         ),
       ),
       localizationsDelegates: const [

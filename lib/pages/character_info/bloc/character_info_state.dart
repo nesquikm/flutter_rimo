@@ -20,11 +20,13 @@ class CharacterInfoState extends Equatable {
     CharacterInfoStatus? status,
     Map<int, Character>? characterCache,
     Character? character,
+    bool forceSetCharacter = false,
   }) {
     return CharacterInfoState(
       status: status ?? this.status,
       characterCache: characterCache ?? this.characterCache,
-      character: character ?? this.character,
+      character:
+          character != null || forceSetCharacter ? character : this.character,
     );
   }
 

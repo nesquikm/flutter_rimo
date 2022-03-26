@@ -64,6 +64,7 @@ class CharacterInfoBloc
           state.copyWith(
             status: CharacterInfoStatus.loading,
             character: character,
+            forceSetCharacter: true,
           ),
         );
         final characters = await _apiCharacter.getListOfCharacters(ids: [id]);
