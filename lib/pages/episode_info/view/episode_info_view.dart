@@ -1,47 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rimo/l10n/l10n.dart';
-import 'package:flutter_rimo/pages/location_info/bloc/location_info_bloc.dart';
+import 'package:flutter_rimo/pages/episode_info/bloc/episode_info_bloc.dart';
 import 'package:intl/intl.dart';
 
-class LocationInfoView extends StatelessWidget {
-  const LocationInfoView({Key? key}) : super(key: key);
+class EpisodeInfoView extends StatelessWidget {
+  const EpisodeInfoView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
     Future<void> _onRefresh() async {
-      context.read<LocationInfoBloc>().add(LocationInfoRefresh());
-      await context.read<LocationInfoBloc>().stream.firstWhere(
-            (element) => element.status != LocationInfoStatus.loading,
+      context.read<EpisodeInfoBloc>().add(EpisodeInfoRefresh());
+      await context.read<EpisodeInfoBloc>().stream.firstWhere(
+            (element) => element.status != EpisodeInfoStatus.loading,
           );
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.appBarTitleLocation)),
+      appBar: AppBar(title: Text(l10n.appBarTitleEpisode)),
       body: MultiBlocListener(
         listeners: [
-          BlocListener<LocationInfoBloc, LocationInfoState>(
+          BlocListener<EpisodeInfoBloc, EpisodeInfoState>(
             listenWhen: (previous, current) =>
                 previous.status != current.status,
             listener: (context, state) {
-              if (state.status == LocationInfoStatus.failure) {
+              if (state.status == EpisodeInfoStatus.failure) {
                 ScaffoldMessenger.of(context)
                   ..hideCurrentSnackBar()
                   ..showSnackBar(
                     SnackBar(
-                      content: Text(l10n.locationErrorSnackbarText),
+                      content: Text(l10n.episodeErrorSnackbarText),
                     ),
                   );
               }
             },
           ),
         ],
-        child: BlocBuilder<LocationInfoBloc, LocationInfoState>(
+        child: BlocBuilder<EpisodeInfoBloc, EpisodeInfoState>(
           builder: (context, state) {
             final theme = Theme.of(context);
-            final location = state.location;
+            final episode = state.episode;
             return RefreshIndicator(
               onRefresh: _onRefresh,
               child: Stack(
@@ -52,30 +52,29 @@ class LocationInfoView extends StatelessWidget {
                         padding: const EdgeInsets.all(16),
                         child: Center(
                           child: Text(
-                            location?.name ?? '',
+                            episode?.name ?? '',
                             style: theme.textTheme.titleLarge,
                           ),
                         ),
                       ),
                       ListTile(
-                        leading: const Icon(Icons.location_pin),
-                        title: Text(location?.type ?? ''),
-                        subtitle: Text(l10n.locationType),
+                        leading: const Icon(Icons.live_tv),
+                        title: Text(episode?.airDate ?? ''),
+                        subtitle: Text(l10n.episodeAirDate),
                         visualDensity: VisualDensity.compact,
                       ),
                       ListTile(
-                        leading: const Icon(Icons.view_in_ar),
-                        title: Text(location?.dimension ?? ''),
-                        subtitle: Text(l10n.locationDimension),
+                        leading: const Icon(Icons.code),
+                        title: Text(episode?.episode ?? ''),
                         visualDensity: VisualDensity.compact,
                       ),
                       ListTile(
                         leading: const Icon(Icons.calendar_today),
                         title: Text(
-                          location != null
+                          episode != null
                               ? DateFormat.yMMMd(
                                   Localizations.localeOf(context).languageCode,
-                                ).format(location.created)
+                                ).format(episode.created)
                               : '',
                         ),
                         visualDensity: VisualDensity.compact,
@@ -83,13 +82,13 @@ class LocationInfoView extends StatelessWidget {
                     ],
                   ),
                   Center(
-                    child: (state.status == LocationInfoStatus.failure)
-                        ? Text(l10n.locationErrorSnackbarText)
+                    child: (state.status == EpisodeInfoStatus.failure)
+                        ? Text(l10n.episodeErrorSnackbarText)
                         : null,
                   ),
                   Center(
-                    child: (state.status == LocationInfoStatus.initial ||
-                            state.location == null)
+                    child: (state.status == EpisodeInfoStatus.initial ||
+                            state.episode == null)
                         ? const CircularProgressIndicator()
                         : null,
                   ),

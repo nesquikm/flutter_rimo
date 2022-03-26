@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rimo/l10n/l10n.dart';
+import 'package:flutter_rimo/pages/episode_info/view/view.dart';
 import 'package:flutter_rimo/pages/episodes/bloc/episodes_bloc.dart';
 import 'package:flutter_rimo/pages/episodes/view/episode_view.dart';
 
@@ -23,6 +24,14 @@ class EpisodesView extends StatelessWidget {
       if (_isBottom() && !context.read<EpisodesBloc>().state.fetchedAll) {
         context.read<EpisodesBloc>().add(const EpisodesFetchNextPage());
       }
+    }
+
+    void _onTap(int id) {
+      Navigator.of(context).push(
+        EpisodeInfoPage.route(
+          id: id,
+        ),
+      );
     }
 
     _scrollController.addListener(_onScroll);
@@ -74,8 +83,10 @@ class EpisodesView extends StatelessWidget {
                           child: CircularProgressIndicator(),
                         );
                       }
+                      final episode = state.episodes.elementAt(index);
                       return EpisodeView(
-                        episode: state.episodes.elementAt(index),
+                        episode: episode,
+                        onTap: () => _onTap(episode.id),
                       );
                     },
                     controller: _scrollController,

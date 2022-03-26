@@ -67,5 +67,17 @@
   "locationDimension": "Dimension",
   "@locationDimension": {
     "description": "The dimension in which the location is located"
+  },
+  "appBarTitleEpisode": "Episode",
+  "@appBarTitleEpisode": {
+    "description": "App bar title for Episode page"
+  },
+  "episodeErrorSnackbarText": "An error occurred while loading episode",
+  "@episodeErrorSnackbarText": {
+    "description": "Snackbar text shown when an error occurs while loading episode"
+  },
+  "episodeAirDate": "Air date",
+  "@episodeAirDate": {
+    "description": "The air date of the episode"
   }
 }
