@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rimo/l10n/l10n.dart';
 import 'package:flutter_rimo/pages/character_info/bloc/character_info_bloc.dart';
+import 'package:flutter_rimo/pages/location_info/view/view.dart';
 import 'package:intl/intl.dart';
 
 class CharacterInfoView extends StatelessWidget {
@@ -18,6 +19,18 @@ class CharacterInfoView extends StatelessWidget {
       await context.read<CharacterInfoBloc>().stream.firstWhere(
             (element) => element.status != CharacterInfoStatus.loading,
           );
+    }
+
+    void _onLocationTap(String? url) {
+      if (url == null || url.isEmpty) return;
+      final idString = RegExp(r'[0-9]+$').firstMatch(url)?.group(0);
+      if (idString == null) return;
+      final id = int.parse(idString);
+      Navigator.of(context).push(
+        LocationInfoPage.route(
+          id: id,
+        ),
+      );
     }
 
     return Scaffold(
@@ -118,12 +131,14 @@ class CharacterInfoView extends StatelessWidget {
                         leading: const Icon(Icons.location_history),
                         title: Text(character?.origin.name ?? ''),
                         subtitle: Text(l10n.characterOriginLocation),
+                        onTap: () => _onLocationTap(character?.origin.url),
                         visualDensity: VisualDensity.compact,
                       ),
                       ListTile(
                         leading: const Icon(Icons.location_pin),
                         title: Text(character?.location.name ?? ''),
                         subtitle: Text(l10n.characterLastKnownLocation),
+                        onTap: () => _onLocationTap(character?.location.url),
                         visualDensity: VisualDensity.compact,
                       ),
                     ],
