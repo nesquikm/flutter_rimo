@@ -11,7 +11,7 @@ void main() {
   group('DfApi', () {
     setUpAll(() {
       serviceAccountJson =
-          File('rimorse2-xphn-7759c5c4dbfb.json').readAsStringSync();
+          File('rimorse2-xphn-b74dc6b8345f.json').readAsStringSync();
     });
     test('can be instantiated', () async {
       final dfApi =
