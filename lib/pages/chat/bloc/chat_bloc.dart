@@ -22,6 +22,7 @@ EventTransformer<E> throttleDroppable<E>(Duration duration) {
 class ChatBloc extends HydratedBloc<ChatEvent, ChatState> {
   ChatBloc(EntitiesRepository entitiesRepository, DfRepository dfRepository)
       : _apiCharacter = entitiesRepository.apiCharacter,
+        _apiEpisode = entitiesRepository.apiEpisode,
         _dfApi = dfRepository.dfApi,
         super(ChatInitial()) {
     _dfApi.init();
@@ -35,7 +36,63 @@ class ChatBloc extends HydratedBloc<ChatEvent, ChatState> {
   Map<String, dynamic> toJson(ChatState state) => state.toJson();
 
   final ApiCharacter _apiCharacter;
+  final ApiEpisode _apiEpisode;
   final DfApi _dfApi;
+
+  Future<void> _processCharacterSearch({
+    required DfApiTextResponse response,
+    required Emitter<ChatState> emit,
+  }) async {
+    final characterName = response.parameters!['character'];
+    if (characterName != null) {
+      final pageCharacter = await _apiCharacter.getAllCharacters(
+        filters: ApiCharacterFilters(name: characterName),
+      );
+      final character = pageCharacter.entities
+          .firstWhere((character) => character.name == characterName);
+
+      final responseChatMessageExtended = ChatMessage(
+        author: ChatMessageAuthor.bot,
+        text:
+            // ignore: lines_longer_than_80_chars
+            '${character.name}: ${character.gender.name}, ${character.species}',
+        imageUrl: character.image,
+        characterId: character.id,
+      );
+      emit(
+        state.copyWith(
+          status: ChatStatus.success,
+          messages: [...state.messages, responseChatMessageExtended],
+        ),
+      );
+    }
+  }
+
+  Future<void> _processEpisodeSearch({
+    required DfApiTextResponse response,
+    required Emitter<ChatState> emit,
+  }) async {
+    final episodeName = response.parameters!['Episode'];
+    if (episodeName != null) {
+      final pageEpisode = await _apiEpisode.getAllEpisodes(
+        filters: ApiEpisodeFilters(name: episodeName),
+      );
+      final episode = pageEpisode.entities
+          .firstWhere((character) => character.name == episodeName);
+
+      final responseChatMessageExtended = ChatMessage(
+        author: ChatMessageAuthor.bot,
+        text: 'Episode "${episode.name}" was aired ${episode.airDate}',
+        episodeId: episode.id,
+      );
+      emit(
+        state.copyWith(
+          status: ChatStatus.success,
+          messages: [...state.messages, responseChatMessageExtended],
+        ),
+      );
+    }
+  }
 
   Future<void> _sendTextQuery(
     ChatSendTextQuery event,
@@ -59,31 +116,14 @@ class ChatBloc extends HydratedBloc<ChatEvent, ChatState> {
           messages: [...state.messages, responseChatMessage],
         ),
       );
-      if (response.intentName?.toLowerCase() == 'character search' &&
-          response.parameters != null &&
-          response.parameters!.isNotEmpty) {
-        final characterName = response.parameters!['character'];
-        if (characterName != null) {
-          final pageCharacter = await _apiCharacter.getAllCharacters(
-            filters: ApiCharacterFilters(name: characterName),
-          );
-          final character = pageCharacter.entities
-              .firstWhere((character) => character.name == characterName);
-
-          final responseChatMessageExtended = ChatMessage(
-            author: ChatMessageAuthor.bot,
-            text:
-                // ignore: lines_longer_than_80_chars
-                '${character.name}: ${character.gender.name}, ${character.species}',
-            imageUrl: character.image,
-            entityId: character.id,
-          );
-          emit(
-            state.copyWith(
-              status: ChatStatus.success,
-              messages: [...state.messages, responseChatMessageExtended],
-            ),
-          );
+      if (response.parameters != null && response.parameters!.isNotEmpty) {
+        switch (response.intentName?.toLowerCase()) {
+          case 'character search':
+            await _processCharacterSearch(response: response, emit: emit);
+            break;
+          case 'episode search':
+            await _processEpisodeSearch(response: response, emit: emit);
+            break;
         }
       }
     } catch (_) {

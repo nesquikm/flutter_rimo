@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rimo/pages/character_info/view/view.dart';
 import 'package:flutter_rimo/pages/chat/models/chat_message.dart';
+import 'package:flutter_rimo/pages/episode_info/view/view.dart';
 
 class ChatViewMessage extends StatelessWidget {
   const ChatViewMessage({Key? key, required this.chatMessage})
@@ -11,10 +12,16 @@ class ChatViewMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void _onTap() {
-      if (chatMessage.entityId != null) {
+      if (chatMessage.characterId != null) {
         Navigator.of(context).push(
           CharacterInfoPage.route(
-            id: chatMessage.entityId!,
+            id: chatMessage.characterId!,
+          ),
+        );
+      } else if (chatMessage.episodeId != null) {
+        Navigator.of(context).push(
+          EpisodeInfoPage.route(
+            id: chatMessage.episodeId!,
           ),
         );
       }
@@ -35,16 +42,6 @@ class ChatViewMessage extends StatelessWidget {
           )
         else
           const SizedBox(width: 32),
-        // Expanded(
-        //   child: Card(
-        //     elevation: 2,
-        //     margin: const EdgeInsets.all(8),
-        //     child: Padding(
-        //       padding: const EdgeInsets.all(8),
-        //       child: Text(chatMessage.text),
-        //     ),
-        //   ),
-        // ),
         Expanded(
           child: Card(
             elevation: 2,

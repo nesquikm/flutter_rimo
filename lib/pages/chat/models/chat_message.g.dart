@@ -17,11 +17,16 @@ ChatMessage _$ChatMessageFromJson(Map<String, dynamic> json) => $checkedCreate(
               'author', (v) => $enumDecode(_$ChatMessageAuthorEnumMap, v)),
           text: $checkedConvert('text', (v) => v as String),
           imageUrl: $checkedConvert('image_url', (v) => v as String?),
-          entityId: $checkedConvert('entity_id', (v) => v as int?),
+          characterId: $checkedConvert('character_id', (v) => v as int?),
+          episodeId: $checkedConvert('episode_id', (v) => v as int?),
         );
         return val;
       },
-      fieldKeyMap: const {'imageUrl': 'image_url', 'entityId': 'entity_id'},
+      fieldKeyMap: const {
+        'imageUrl': 'image_url',
+        'characterId': 'character_id',
+        'episodeId': 'episode_id'
+      },
     );
 
 Map<String, dynamic> _$ChatMessageToJson(ChatMessage instance) =>
@@ -29,7 +34,8 @@ Map<String, dynamic> _$ChatMessageToJson(ChatMessage instance) =>
       'author': _$ChatMessageAuthorEnumMap[instance.author],
       'text': instance.text,
       'image_url': instance.imageUrl,
-      'entity_id': instance.entityId,
+      'character_id': instance.characterId,
+      'episode_id': instance.episodeId,
     };
 
 const _$ChatMessageAuthorEnumMap = {

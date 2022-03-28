@@ -28,14 +28,9 @@ class ChatView extends StatelessWidget {
   }
 
   Widget buildInput({required BuildContext context}) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 64,
-      decoration: const BoxDecoration(
-          // border: Border(
-          // top: BorderSide(color: ColorConstants.greyColor2, width: 0.5)),
-          // color: Colors.white
-          ),
       child: Row(
         children: [
           Flexible(
@@ -45,29 +40,21 @@ class ChatView extends StatelessWidget {
                 onSubmitted: (value) {
                   _onSend(context: context, text: textEditingController.text);
                 },
-                // style:
-                // TextStyle(color: ColorConstants.primaryColor, fontSize: 15),
                 controller: textEditingController,
                 decoration: InputDecoration.collapsed(
                   hintText: hints[_random.nextInt(hints.length)],
-                  // hintStyle: TextStyle(color: ColorConstants.greyColor),
                 ),
-                // focusNode: focusNode,
               ),
             ),
           ),
-
-          // Button send message
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 8),
             child: IconButton(
               icon: const Icon(Icons.send),
               onPressed: () =>
                   _onSend(context: context, text: textEditingController.text),
-              // color: ColorConstants.primaryColor,
             ),
           ),
-          // color: Colors.white,
         ],
       ),
     );

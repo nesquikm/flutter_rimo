@@ -52,7 +52,6 @@ To check formatting and analyze code:
 ```sh
 $ flutter format --set-exit-if-changed lib test
 $ flutter analyze lib test
-
 ```
 
 To run all unit and widget tests use the following command:

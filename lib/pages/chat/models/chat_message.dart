@@ -16,7 +16,8 @@ class ChatMessage extends Equatable {
     required this.author,
     required this.text,
     this.imageUrl,
-    this.entityId,
+    this.characterId,
+    this.episodeId,
   });
 
   /// Create chat message from json
@@ -29,8 +30,9 @@ class ChatMessage extends Equatable {
   final ChatMessageAuthor author;
   final String text;
   final String? imageUrl;
-  final int? entityId;
+  final int? characterId;
+  final int? episodeId;
 
   @override
-  List<Object?> get props => [author, text, imageUrl, entityId];
+  List<Object?> get props => [author, text, imageUrl, characterId, episodeId];
 }
