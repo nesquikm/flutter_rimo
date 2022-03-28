@@ -22,8 +22,6 @@ EventTransformer<E> throttleDroppable<E>(Duration duration) {
 class ChatBloc extends HydratedBloc<ChatEvent, ChatState> {
   ChatBloc(EntitiesRepository entitiesRepository, DfRepository dfRepository)
       : _apiCharacter = entitiesRepository.apiCharacter,
-        _apiLocation = entitiesRepository.apiLocation,
-        _apiEpisode = entitiesRepository.apiEpisode,
         _dfApi = dfRepository.dfApi,
         super(ChatInitial()) {
     _dfApi.init();
@@ -37,60 +35,59 @@ class ChatBloc extends HydratedBloc<ChatEvent, ChatState> {
   Map<String, dynamic> toJson(ChatState state) => state.toJson();
 
   final ApiCharacter _apiCharacter;
-  final ApiLocation _apiLocation;
-  final ApiEpisode _apiEpisode;
   final DfApi _dfApi;
 
   Future<void> _sendTextQuery(
     ChatSendTextQuery event,
     Emitter<ChatState> emit,
   ) async {
-    // try {
-    final queryChatMessage =
-        ChatMessage(author: ChatMessageAuthor.human, text: event.query);
-    emit(
-      state.copyWith(
-        status: ChatStatus.loading,
-        messages: [...state.messages, queryChatMessage],
-      ),
-    );
-    final response = await _dfApi.textQuery(query: event.query);
-    final responseChatMessage =
-        ChatMessage(author: ChatMessageAuthor.bot, text: response.text);
-    emit(
-      state.copyWith(
-        status: ChatStatus.success,
-        messages: [...state.messages, responseChatMessage],
-      ),
-    );
-    if (response.intentName?.toLowerCase() == 'character search' &&
-        response.parameters != null &&
-        response.parameters!.isNotEmpty) {
-      final characterName = response.parameters!['character'];
-      if (characterName != null) {
-        final pageCharacter = await _apiCharacter.getAllCharacters(
-          filters: ApiCharacterFilters(name: characterName),
-        );
-        final character = pageCharacter.entities
-            .firstWhere((character) => character.name == characterName);
+    try {
+      final queryChatMessage =
+          ChatMessage(author: ChatMessageAuthor.human, text: event.query);
+      emit(
+        state.copyWith(
+          status: ChatStatus.loading,
+          messages: [...state.messages, queryChatMessage],
+        ),
+      );
+      final response = await _dfApi.textQuery(query: event.query);
+      final responseChatMessage =
+          ChatMessage(author: ChatMessageAuthor.bot, text: response.text);
+      emit(
+        state.copyWith(
+          status: ChatStatus.success,
+          messages: [...state.messages, responseChatMessage],
+        ),
+      );
+      if (response.intentName?.toLowerCase() == 'character search' &&
+          response.parameters != null &&
+          response.parameters!.isNotEmpty) {
+        final characterName = response.parameters!['character'];
+        if (characterName != null) {
+          final pageCharacter = await _apiCharacter.getAllCharacters(
+            filters: ApiCharacterFilters(name: characterName),
+          );
+          final character = pageCharacter.entities
+              .firstWhere((character) => character.name == characterName);
 
-        final responseChatMessageExtended = ChatMessage(
-          author: ChatMessageAuthor.bot,
-          text:
-              '${character.name}: ${character.gender.name}, ${character.species}',
-          imageUrl: character.image,
-          entityId: character.id,
-        );
-        emit(
-          state.copyWith(
-            status: ChatStatus.success,
-            messages: [...state.messages, responseChatMessageExtended],
-          ),
-        );
+          final responseChatMessageExtended = ChatMessage(
+            author: ChatMessageAuthor.bot,
+            text:
+                // ignore: lines_longer_than_80_chars
+                '${character.name}: ${character.gender.name}, ${character.species}',
+            imageUrl: character.image,
+            entityId: character.id,
+          );
+          emit(
+            state.copyWith(
+              status: ChatStatus.success,
+              messages: [...state.messages, responseChatMessageExtended],
+            ),
+          );
+        }
       }
+    } catch (_) {
+      emit(state.copyWith(status: ChatStatus.failure));
     }
-    // } catch (_) {
-    //   emit(state.copyWith(status: ChatStatus.failure));
-    // }
   }
 }

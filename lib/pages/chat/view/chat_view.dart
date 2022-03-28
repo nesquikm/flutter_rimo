@@ -99,7 +99,6 @@ class ChatView extends StatelessWidget {
         ],
         child: BlocBuilder<ChatBloc, ChatState>(
           builder: (context, state) {
-            final theme = Theme.of(context);
             return Stack(
               children: [
                 Expanded(
