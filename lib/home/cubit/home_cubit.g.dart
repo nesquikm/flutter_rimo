@@ -27,4 +27,5 @@ const _$HomeTabEnumMap = {
   HomeTab.character: 'character',
   HomeTab.location: 'location',
   HomeTab.episode: 'episode',
+  HomeTab.chat: 'chat',
 };

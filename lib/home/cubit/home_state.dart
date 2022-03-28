@@ -1,6 +1,6 @@
 part of 'home_cubit.dart';
 
-enum HomeTab { character, location, episode }
+enum HomeTab { character, location, episode, chat }
 
 @JsonSerializable()
 class HomeState extends Equatable {

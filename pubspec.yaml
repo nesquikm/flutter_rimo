@@ -9,6 +9,8 @@ environment:
 dependencies:
   bloc: ^8.0.3
   bloc_concurrency: ^0.2.0
+  df_repository:
+    path: packages/df_repository
   entities_repository:
     path: packages/entities_repository
   equatable: ^2.0.3
@@ -36,3 +38,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+  assets:
+      - assets/

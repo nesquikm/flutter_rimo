@@ -25,7 +25,12 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       body: IndexedStack(
         index: selectedTab.index,
-        children: const [CharactersPage(), LocationsPage(), EpisodesPage()],
+        children: const [
+          CharactersPage(),
+          LocationsPage(),
+          EpisodesPage(),
+          ChatPage(),
+        ],
       ),
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
@@ -46,6 +51,11 @@ class HomeView extends StatelessWidget {
               groupValue: selectedTab,
               value: HomeTab.episode,
               icon: Icons.list_rounded,
+            ),
+            _HomeTabButton(
+              groupValue: selectedTab,
+              value: HomeTab.chat,
+              icon: Icons.chat,
             ),
           ],
         ),

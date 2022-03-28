@@ -79,5 +79,13 @@
   "episodeAirDate": "Air date",
   "@episodeAirDate": {
     "description": "The air date of the episode"
+  },
+  "appBarTitleChat": "Chat",
+  "@appBarTitleChat": {
+    "description": "App bar title for Chat page"
+  },
+  "chatErrorSnackbarText": "An error occurred while loading chat",
+  "@chatErrorSnackbarText": {
+    "description": "Snackbar text shown when an error occurs while loading chat"
   }
 }

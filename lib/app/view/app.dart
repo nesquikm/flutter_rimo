@@ -5,6 +5,7 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import 'package:df_repository/df_repository.dart';
 import 'package:entities_repository/entities_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,14 +14,22 @@ import 'package:flutter_rimo/home/home.dart';
 import 'package:flutter_rimo/l10n/l10n.dart';
 
 class App extends StatelessWidget {
-  const App({Key? key, required this.entitiesRepository}) : super(key: key);
+  const App({
+    Key? key,
+    required this.entitiesRepository,
+    required this.dfRepository,
+  }) : super(key: key);
 
   final EntitiesRepository entitiesRepository;
+  final DfRepository dfRepository;
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: entitiesRepository,
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider.value(value: entitiesRepository),
+        RepositoryProvider.value(value: dfRepository),
+      ],
       child: const AppView(),
     );
   }
