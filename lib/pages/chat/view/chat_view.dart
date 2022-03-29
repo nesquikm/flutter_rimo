@@ -93,6 +93,8 @@ class ChatView extends StatelessWidget {
                     children: [
                       Expanded(
                         child: ListView.builder(
+                          keyboardDismissBehavior:
+                              ScrollViewKeyboardDismissBehavior.onDrag,
                           reverse: true,
                           physics: const AlwaysScrollableScrollPhysics(),
                           itemCount: state.messages.length,
