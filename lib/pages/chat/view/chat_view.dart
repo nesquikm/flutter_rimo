@@ -64,67 +64,71 @@ class ChatView extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.appBarTitleChat)),
-      body: MultiBlocListener(
-        listeners: [
-          BlocListener<ChatBloc, ChatState>(
-            listenWhen: (previous, current) =>
-                previous.status != current.status,
-            listener: (context, state) {
-              if (state.status == ChatStatus.failure) {
-                ScaffoldMessenger.of(context)
-                  ..hideCurrentSnackBar()
-                  ..showSnackBar(
-                    SnackBar(
-                      content: Text(l10n.chatErrorSnackbarText),
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        appBar: AppBar(title: Text(l10n.appBarTitleChat)),
+        body: MultiBlocListener(
+          listeners: [
+            BlocListener<ChatBloc, ChatState>(
+              listenWhen: (previous, current) =>
+                  previous.status != current.status,
+              listener: (context, state) {
+                if (state.status == ChatStatus.failure) {
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(
+                      SnackBar(
+                        content: Text(l10n.chatErrorSnackbarText),
+                      ),
+                    );
+                }
+              },
+            ),
+          ],
+          child: BlocBuilder<ChatBloc, ChatState>(
+            builder: (context, state) {
+              return Stack(
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: ListView.builder(
+                            keyboardDismissBehavior:
+                                ScrollViewKeyboardDismissBehavior.onDrag,
+                            reverse: true,
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            itemCount: state.messages.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final resversedIndex =
+                                  state.messages.length - index - 1;
+                              final chatMessage =
+                                  state.messages[resversedIndex];
+                              return ChatViewMessage(chatMessage: chatMessage);
+                            },
+                            controller: _listScrollController,
+                          ),
+                        ),
+                        buildInput(context: context),
+                      ],
                     ),
-                  );
-              }
+                  ),
+                  Center(
+                    child: (state.status == ChatStatus.failure)
+                        ? Text(l10n.characterErrorSnackbarText)
+                        : null,
+                  ),
+                  Center(
+                    child: (state.status == ChatStatus.initial ||
+                            state.messages.isEmpty)
+                        ? const Icon(Icons.waving_hand, size: 32)
+                        : null,
+                  ),
+                ],
+              );
             },
           ),
-        ],
-        child: BlocBuilder<ChatBloc, ChatState>(
-          builder: (context, state) {
-            return Stack(
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: ListView.builder(
-                          keyboardDismissBehavior:
-                              ScrollViewKeyboardDismissBehavior.onDrag,
-                          reverse: true,
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          itemCount: state.messages.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            final resversedIndex =
-                                state.messages.length - index - 1;
-                            final chatMessage = state.messages[resversedIndex];
-                            return ChatViewMessage(chatMessage: chatMessage);
-                          },
-                          controller: _listScrollController,
-                        ),
-                      ),
-                      buildInput(context: context),
-                    ],
-                  ),
-                ),
-                Center(
-                  child: (state.status == ChatStatus.failure)
-                      ? Text(l10n.characterErrorSnackbarText)
-                      : null,
-                ),
-                Center(
-                  child: (state.status == ChatStatus.initial ||
-                          state.messages.isEmpty)
-                      ? const Icon(Icons.waving_hand, size: 32)
-                      : null,
-                ),
-              ],
-            );
-          },
         ),
       ),
     );
