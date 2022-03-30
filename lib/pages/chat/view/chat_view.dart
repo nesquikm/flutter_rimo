@@ -90,29 +90,26 @@ class ChatView extends StatelessWidget {
             builder: (context, state) {
               return Stack(
                 children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: ListView.builder(
-                            keyboardDismissBehavior:
-                                ScrollViewKeyboardDismissBehavior.onDrag,
-                            reverse: true,
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            itemCount: state.messages.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              final resversedIndex =
-                                  state.messages.length - index - 1;
-                              final chatMessage =
-                                  state.messages[resversedIndex];
-                              return ChatViewMessage(chatMessage: chatMessage);
-                            },
-                            controller: _listScrollController,
-                          ),
+                  Column(
+                    children: [
+                      Expanded(
+                        child: ListView.builder(
+                          keyboardDismissBehavior:
+                              ScrollViewKeyboardDismissBehavior.onDrag,
+                          reverse: true,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          itemCount: state.messages.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final resversedIndex =
+                                state.messages.length - index - 1;
+                            final chatMessage = state.messages[resversedIndex];
+                            return ChatViewMessage(chatMessage: chatMessage);
+                          },
+                          controller: _listScrollController,
                         ),
-                        buildInput(context: context),
-                      ],
-                    ),
+                      ),
+                      buildInput(context: context),
+                    ],
                   ),
                   Center(
                     child: (state.status == ChatStatus.failure)
