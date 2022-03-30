@@ -9,7 +9,7 @@ class EpisodeInfoPage extends StatelessWidget {
 
   static Route<void> route({required int id}) {
     return MaterialPageRoute(
-      fullscreenDialog: true,
+      fullscreenDialog: false,
       builder: (context) => BlocProvider(
         create: (context) => EpisodeInfoBloc(
           context.read<EntitiesRepository>(),

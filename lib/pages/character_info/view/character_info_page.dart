@@ -9,7 +9,7 @@ class CharacterInfoPage extends StatelessWidget {
 
   static Route<void> route({required int id}) {
     return MaterialPageRoute(
-      fullscreenDialog: true,
+      fullscreenDialog: false,
       builder: (context) => BlocProvider(
         create: (context) => CharacterInfoBloc(
           context.read<EntitiesRepository>(),
