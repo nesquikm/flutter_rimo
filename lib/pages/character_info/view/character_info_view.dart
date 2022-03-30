@@ -68,9 +68,9 @@ class CharacterInfoView extends StatelessWidget {
                         child: Center(
                           child: CircleAvatar(
                             radius: 64,
-                            foregroundImage: NetworkImage(
-                              character != null ? character.image : '',
-                            ),
+                            foregroundImage: character != null
+                                ? NetworkImage(character.image)
+                                : null,
                             child: const Icon(Icons.person, size: 64),
                           ),
                         ),
