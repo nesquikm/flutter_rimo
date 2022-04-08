@@ -43,7 +43,7 @@ Future<void> bootstrap() async {
       );
 
       final serviceAccountJson =
-          await rootBundle.loadString('assets/rimorse2-xphn-b74dc6b8345f.json');
+          await rootBundle.loadString('assets/rimorse2-key.json');
       final entitiesRepository = EntitiesRepository();
       final dfRepository = DfRepository(
         serviceAccountJson: serviceAccountJson,
